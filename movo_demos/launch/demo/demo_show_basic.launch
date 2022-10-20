@@ -3,7 +3,11 @@
  	<arg name="sim" default="false"/>
     <arg name="local" default="true"/>
 
+<<<<<<< HEAD
   <machine name="movo1" address="movo1" user="robohub" 
+=======
+  <machine name="movo1" address="movo1" user="movo" 
+>>>>>>> Modify literals to use correct user
                env-loader="/home/robohub/env.sh" default="true" unless="$(arg local)"/>
 
     <!-- Navigation configuration -->
