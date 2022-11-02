@@ -15,12 +15,12 @@
 #    and the IP address is DHCP from MOVO1
 
 if [ "$HOSTNAME" = movo1 ]; then
-    export ROBOT_NETWORK=eth0
-    export ROS_IP=$(ip -4 address show $ROBOT_NETWORK | grep 'inet' | sed 's/.*inet \([0-9\.]\+\).*/\1/')
+    export ROBOT_NETWORK=enp0s25
+    export ROS_IP=$(ip -4 address show $ROBOT_NETWORK | grep 'inet' | sed 's/.*inet \([0-9\.]\+\).*/\1/' | head -n 1)
     export ROS_MASTER_URI=http://movo2:11311/
 elif [ "$HOSTNAME" = movo2 ]; then
-    export ROBOT_NETWORK=br0
-    export ROS_IP=$(ip -4 address show $ROBOT_NETWORK | grep 'inet' | sed 's/.*inet \([0-9\.]\+\).*/\1/')
+    export ROBOT_NETWORK=enp0s25
+    export ROS_IP=$(ip -4 address show $ROBOT_NETWORK | grep 'inet' | sed 's/.*inet \([0-9\.]\+\).*/\1/' | head -n 1)
     export ROS_MASTER_URI=http://movo2:11311/
 else
     # This should be changed to whatever physical interface is connected to the robot (ie wlan0, eth0, etc..)
@@ -30,7 +30,7 @@ else
     then
         #We found an interface on the robot subnet so lets use this interface
         export ROBOT_NETWORK=$robot_iface
-        export ROS_IP=$(ip -4 address show $ROBOT_NETWORK | grep 'inet' | sed 's/.*inet \([0-9\.]\+\).*/\1/')
+        export ROS_IP=$(ip -4 address show $ROBOT_NETWORK | grep 'inet' | sed 's/.*inet \([0-9\.]\+\).*/\1/' | head - n 1)
         #now lets try to ping movo to see if it should be the master
         ping -q -c 1 -W 1 movo2 >/dev/null
         temp=$?
