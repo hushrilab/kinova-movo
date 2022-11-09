@@ -57,3 +57,6 @@ Ensure you've run all your source commands (ie. source devel/setup.bash). These 
 export ROS_MASTER_URI=http://129.97.71.49:11311
 export ROS_IP=<your ip address in same subnet as movo1>
 
+# Using the ROS upstart service
+sudo systemctl start movo_system.service
+sudo systemctl stop movo_system.service
