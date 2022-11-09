@@ -3,6 +3,10 @@ Make sure you are connected to the robohub wifi
 movo1 can be reached by `ssh robohub@movo1`
 movo2 can be reached by `ssh robohub@movo2`
 
+# Connecting RVIZ from a remote computer
+Run 'ROS_MASTER_URI="http://movo2:11311/"' on the local computer running rviz
+This makes the local computer listen for movo2 as a ROS master
+
 # Camera
 Camera uses the realsense-ros pkg
 Can be launched with roslaunch movo_bringup movo2.launch as part of movo
@@ -43,7 +47,7 @@ On movo1, run <rosrun si_utils torso_jtas_test.py>
 # Moving the gimbal
 Assert that the robot is not charging
 Assert estop is not engaged
-On movo1, run <roslaunch movo_bringup movo1.launch>
+On movo1, run <roslaunchmovo_bringup movo1.launch>
 On movo1, run <rosrun si_utils head_jtas_test.py>
 
 # Connecting personal PC to movo1 master
@@ -58,5 +62,10 @@ export ROS_MASTER_URI=http://129.97.71.49:11311
 export ROS_IP=<your ip address in same subnet as movo1>
 
 # Using the ROS upstart service
+movo_system.launch is launched by default on bootup
+If there is an error launching a launch file from the terminal where a network port is already in use
+then movo_system.launch has already been launched. Use the stop command below to halt the auto-launch
 sudo systemctl start movo_system.service
 sudo systemctl stop movo_system.service
+logs for the auto-launched service are in ~/.ros/log
+
