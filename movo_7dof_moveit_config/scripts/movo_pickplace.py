@@ -137,8 +137,8 @@ class MovoPickPlace(MovoGl):
 		joint_cmd[10:] = arm_joint_cmd
 		joint_cmd[8:10] = head_joint_cmd
 
-		print(" Grasp approach pose?")
-		input()
+		print(" Grasp approach pose")
+		# input()
 
 		self.execute_joints_cmd(self.move_group_gl,joint_cmd,"grasp_approach_head_turn")
 
@@ -162,12 +162,12 @@ class MovoPickPlace(MovoGl):
 		grasp_pose_base.pose.position.y = grasp_pose_base_v[1]
 		grasp_pose_base.pose.position.z = grasp_pose_base_v[2]
 
-		print(" Grasp pose?")
-		input()
+		print(" Grasp pose")
+		# input()
 		success = self.move_attempt(id_group,move_group, grasp_pose_base, "grasp_pose")
 
-		print(" Close gripper?")
-		input()
+		print(" Close gripper")
+		# input()
 		# CLOSE GRIPPER
 		self.close_gripper(id_group)
 
@@ -191,8 +191,8 @@ class MovoPickPlace(MovoGl):
 		pick_retreat_pose_base.pose.position.y = pick_retreat_pose_base_v[1]
 		pick_retreat_pose_base.pose.position.z = pick_retreat_pose_base_v[2]
 
-		print ("Retreat pose?")
-		input()
+		print ("Retreat pose")
+		# input()
 		success = self.move_attempt(id_group,move_group, pick_retreat_pose_base, "pick_retreat_pose")
 
 
@@ -292,25 +292,25 @@ class MovoPickPlace(MovoGl):
 		plan_head = self.move_group_head.plan()
 		plan_both_arms_head = self.combine_plans(plan_both_arms,plan_head)
 
-		print ("Switch point action?")
-		input()
+		print ("Switch point action")
+		# input()
 		self.execute_plan_cmd(self.move_group_gl,plan_both_arms_head,"right_switch_left_approach_head")
 
-		print ("Left to switch point?")
-		input()
+		print ("Left to switch point")
+		# input()
 		p.pose.position.y = p.pose.position.y - self.const.APPROACH_PICK_Y[1]
 		success = self.move_attempt(1,self.move_groups[1], p, "switch_point")
 
-		print ("Close left gripper?")
-		input()
+		print ("Close left gripper")
+		# input()
 		self.close_gripper(1)
 		self.scene.remove_attached_object(self.move_groups[0].get_end_effector_link(), name=obj_to_grasp)
 		self.scene.remove_attached_object(self.eef_links[0], name=obj_to_grasp)
 		self.scene.attach_box(self.eef_links[1], obj_to_grasp, touch_links=self.touch_links_groups[1])
 		rospy.sleep(1)
 		# FIRST GROUP UNGRASPS
-		print ("Open right gripper?")
-		input()
+		print ("Open right gripper")
+		# input()
 		self.open_gripper(0)
 
 		#MOVING AWAY
@@ -327,8 +327,8 @@ class MovoPickPlace(MovoGl):
 			nb_try = nb_try + 1
 
 		plan_both_arms = self.combine_plans(plan_right,plan_left)
-		print ("Move away left - relax right?")
-		input()
+		print ("Move away left - relax right")
+		# input()
 		self.execute_plan_cmd(self.move_group_gl,plan_both_arms_head,"right_switch_left_approach_head")
 		#self.execute_plan_cmd(self.move_l_group,plan_both_arms,"left_away_right_relax")
 
@@ -385,8 +385,8 @@ class MovoPickPlace(MovoGl):
 		plan_head = self.move_group_head.plan()
 		plan_arm_head = self.combine_plans(plan_left,plan_head)
 
-		print ("Place approach pose?")
-		input()
+		print ("Place approach pose")
+		# input()
 		self.execute_plan_cmd(self.move_group_gl,plan_arm_head,"place_approach_head")
 
 		# MOVE TO PLACE POSE
@@ -404,13 +404,13 @@ class MovoPickPlace(MovoGl):
 		place_pose_base.position.x = place_pose_base_v[0]
 		place_pose_base.position.y = place_pose_base_v[1]
 		place_pose_base.position.z = place_pose_base_v[2]
-		print ("Place pose?")
-		input()
+		print ("Place pose")
+		# input()
 		success = self.move_attempt(id_group,move_group, place_pose_base, "place_pose")
 
 		# OPEN GRIPPER
-		print ("Open gripper?")
-		input()
+		print ("Open gripper")
+		# input()
 		self.open_gripper(id_group)
 
 		# DETACH OBJECT
@@ -437,8 +437,8 @@ class MovoPickPlace(MovoGl):
 		self.move_group_head.set_joint_value_target(head_joint_cmd)
 		plan_head = self.move_group_head.plan()
 		plan_arm_head = self.combine_plans(plan_left,plan_head)
-		print ("Place retreat pose?")
-		input()
+		print ("Place retreat pose")
+		# input()
 		self.execute_plan_cmd(self.move_group_gl,plan_arm_head,"place_retreat_head")
 
 		print ("Place pipeline done.")
