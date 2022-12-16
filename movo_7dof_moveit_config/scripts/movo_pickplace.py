@@ -216,7 +216,7 @@ class MovoPickPlace(MovoGl):
 			nb_try = nb_try + 1
 		if is_ok:
 			print ("Executing plan found to move to %s." % name)
-			group.execute(plan)
+			group.execute(plan[1])
 			group.stop()
 			group.clear_pose_targets()
 			print ("Position %s reached." % name)
@@ -253,7 +253,7 @@ class MovoPickPlace(MovoGl):
 	def execute_plan_cmd(self, move_group, plan, name):
 
 		print ("Executing plan found to %s." % name)
-		move_group.execute(plan)
+		move_group.execute(plan[1])
 		move_group.stop()
 		move_group.clear_pose_targets()
 		print ("Position reached.")
@@ -458,8 +458,8 @@ class MovoPickPlace(MovoGl):
 			nb_try = nb_try + 1
 
 		if is_ok:
-			nb_pts = len(plan.joint_trajectory.points)
-			last_pt = plan.joint_trajectory.points[nb_pts-1]
+			nb_pts = len(plan[1].joint_trajectory.points)
+			last_pt = plan[1].joint_trajectory.points[nb_pts-1]
 			joints = last_pt.positions
 			return joints
 		else:
@@ -472,8 +472,8 @@ class MovoPickPlace(MovoGl):
 
 	# ========================================================================
 	def combine_plans(self,p1,p2):
-		nb_pts1 = len(p1.joint_trajectory.points)
-		nb_pts2 = len(p2.joint_trajectory.points)
+		nb_pts1 = len(p1[1].joint_trajectory.points)
+		nb_pts2 = len(p2[1].joint_trajectory.points)
 		Nmin = min(nb_pts1,nb_pts2)
 		if Nmin == nb_pts1:
 			print ("min right")
@@ -485,17 +485,17 @@ class MovoPickPlace(MovoGl):
 			plan = p2
 			plan_l = p1
 			Nmax =  nb_pts1
-		plan_l.joint_trajectory.joint_names.extend(plan.joint_trajectory.joint_names)
+		plan_l[1].joint_trajectory.joint_names.extend(plan[1].joint_trajectory.joint_names)
 
 		for i in range(Nmax):
 			if i < Nmin:
-				plan_l.joint_trajectory.points[i].positions = plan_l.joint_trajectory.points[i].positions + plan.joint_trajectory.points[i].positions
-				plan_l.joint_trajectory.points[i].velocities = plan_l.joint_trajectory.points[i].velocities + plan.joint_trajectory.points[i].velocities
-				plan_l.joint_trajectory.points[i].accelerations = plan_l.joint_trajectory.points[i].accelerations + plan.joint_trajectory.points[i].accelerations
+				plan_l[1].joint_trajectory.points[i].positions = plan_l[1].joint_trajectory.points[i].positions + plan[1].joint_trajectory.points[i].positions
+				plan_l[1].joint_trajectory.points[i].velocities = plan_l[1].joint_trajectory.points[i].velocities + plan[1].joint_trajectory.points[i].velocities
+				plan_l[1].joint_trajectory.points[i].accelerations = plan_l[1].joint_trajectory.points[i].accelerations + plan[1].joint_trajectory.points[i].accelerations
 			else:
-				plan_l.joint_trajectory.points[i].positions = plan_l.joint_trajectory.points[i].positions + plan.joint_trajectory.points[Nmin-1].positions
-				plan_l.joint_trajectory.points[i].velocities = plan_l.joint_trajectory.points[i].velocities + plan.joint_trajectory.points[Nmin-1].velocities
-				plan_l.joint_trajectory.points[i].accelerations = plan_l.joint_trajectory.points[i].accelerations + plan.joint_trajectory.points[Nmin-1].accelerations
+				plan_l[1].joint_trajectory.points[i].positions = plan_l[1].joint_trajectory.points[i].positions + plan[1].joint_trajectory.points[Nmin-1].positions
+				plan_l[1].joint_trajectory.points[i].velocities = plan_l[1].joint_trajectory.points[i].velocities + plan[1].joint_trajectory.points[Nmin-1].velocities
+				plan_l[1].joint_trajectory.points[i].accelerations = plan_l[1].joint_trajectory.points[i].accelerations + plan[1].joint_trajectory.points[Nmin-1].accelerations
 
 		return plan_l
 	# ========================================================================
@@ -504,14 +504,14 @@ class MovoPickPlace(MovoGl):
 	# =========================== CHECK PLAN IS OK ===========================
 	def check_plan(self, id_group, group, plan, name):
 		""" checks if plan found and if joint values ok"""
-		nb_pts = len(plan.joint_trajectory.points)
+		nb_pts = len(plan[1].joint_trajectory.points)
 		if nb_pts == 0 : # No plan found
 			return False
 
 		print ("Checking plan...")
 		for i in range(nb_pts):
 			print ("Point %s:" % i)
-			pt = plan.joint_trajectory.points[i]
+			pt = plan[1].joint_trajectory.points[i]
 			joints = pt.positions
 			sh_l = joints[0] #shoulder lift
 			sh_p = joints[1] #shoulder pan
