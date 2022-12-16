@@ -78,8 +78,8 @@ class MovoHandOver(MovoGl):
 
 		rospy.on_shutdown(self.clean_shutdown)
 
-		print "Initialization done for Movo HANDOVER task."
-		print ""
+		print("Initialization done for Movo HANDOVER task.")
+		print("")
 	# ========================================================================
 
 
@@ -103,9 +103,9 @@ class MovoHandOver(MovoGl):
 			self.baseline = self.baseline + self.force_mean[2]
 		else:
 			rospy.loginfo("Mean force vector:\n%s",self.force_mean)
-			print "Baseline: %s" % (self.baseline/self.nb)
+			print("Baseline: %s" % (self.baseline/self.nb))
 		if self.force_mem != [0,0,0] and len(self.l_forces) == self.nb and abs(self.force_mem[2] - self.baseline/self.nb) > 5.0: #TO CHANGE
-			print "User has grasped the object : %s" % self.force_mean[2]
+			print("User has grasped the object : %s" % self.force_mean[2])
 			self.change = True
 		else:
 			self.force_mem = self.force_mean
@@ -138,8 +138,8 @@ class MovoHandOver(MovoGl):
 		gripper_group = self.gripper_group
 		print("Executing plan found to open the gripper...")
 		gripper_group.command(self.const.JOINT_OPEN_GRIPPER)
-		print "Gripper opened."
-		print ""
+		print("Gripper opened.")
+		print("")
 		if button == True:
 			self.ungrasp_button.root.destroy()
 	# ========================================================================
@@ -151,8 +151,8 @@ class MovoHandOver(MovoGl):
 		gripper_group = self.gripper_group
 		print("Executing plan found to close the gripper...")
 		gripper_group.command(self.const.JOINT_CLOSE_GRIPPER)
-		print "Gripper closed."
-		print ""
+		print("Gripper closed.")
+		print("")
 	# ========================================================================
 
 
@@ -160,17 +160,17 @@ class MovoHandOver(MovoGl):
 	def move_initial_pose(self):
 		self.move_group_gl.set_named_target("home_grasp");
 		plan = self.move_group_gl.plan()
-		if len(plan.joint_trajectory.points) == 0 :
+		if len(plan[1].joint_trajectory.points) == 0 :
 			print("[ERROR] No plan found to move to initial pose.")
 			sys.exit(1)
 		else :
 			print("Executing plan found to reach initial pose...")
-			self.move_group_gl.execute(plan)
+			self.move_group_gl.execute(plan[1])
 			self.move_group_gl.stop()
 			self.move_group_gl.clear_pose_targets()
 			self.open_gripper()
-			print "Initial pose reached."
-			print ""
+			print("Initial pose reached.")
+			print("")
 	# ========================================================================
 
 	# ============================= PICK PIPELINE ============================
@@ -272,8 +272,8 @@ class MovoHandOver(MovoGl):
 		pick_retreat_pose_base.pose.position.z = pick_retreat_pose_base_v[2]
 		success = self.move_attempt(move_group, pick_retreat_pose_base, "pick_retreat_pose")
 
-		print "Pick pipeline done."
-		print ""
+		print("Pick pipeline done.")
+		print("")
 
 		return pick_retreat_pose_base
 	# ========================================================================
@@ -285,21 +285,21 @@ class MovoHandOver(MovoGl):
 		is_ok = False
 		nb_try = 0
 		while is_ok == False and nb_try < 20:
-			print "Move attempt - try number: %s" % nb_try
+			print("Move attempt - try number: %s" % nb_try)
 			plan = group.plan()
 			is_ok = self.check_plan(group,plan,name)
 			nb_try = nb_try + 1
 		if is_ok:
-			print "Executing plan found to move to %s." % name
-			group.execute(plan)
+			print("Executing plan found to move to %s." % name)
+			group.execute(plan[1])
 			group.stop()
 			group.clear_pose_targets()
-			print "Position %s reached." % name
-			print ""
+			print("Position %s reached." % name)
+			print("")
 			return True
 		else :
-			print "[ERROR] No plan found to move to %s." % name
-			print ""
+			print("[ERROR] No plan found to move to %s." % name)
+			print("")
 			sys.exit(1)
 	# ========================================================================
 
@@ -307,33 +307,33 @@ class MovoHandOver(MovoGl):
 	# =========================== CHECK PLAN IS OK ===========================
 	def check_plan(self, group, plan, name):
 		""" checks if plan found and if joint values ok"""
-		nb_pts = len(plan.joint_trajectory.points)
+		nb_pts = len(plan[1].joint_trajectory.points)
 		if nb_pts == 0 : # No plan found
 			return False
 
-		print "Checking plan..."
+		print("Checking plan...")
 		for i in range(nb_pts):
-			print "Point %s:" % i
-			pt = plan.joint_trajectory.points[i]
+			print("Point %s:" % i)
+			pt = plan[1].joint_trajectory.points[i]
 			joints = pt.positions
 			sh_l = joints[0] #shoulder lift
 			sh_p = joints[1] #shoulder pan
 			elb = joints[3] #elbow
-			print "sh_l : %s" % sh_l
-			print "sh_p : %s" % sh_p
-			print "elb : %s" % elb
+			print("sh_l : %s" % sh_l)
+			print("sh_p : %s" % sh_p)
+			print("elb : %s" % elb)
 
 			if sh_l < -1.5 or sh_l > -0.5:
-				print "Plan pb for sh_l r"
+				print("Plan pb for sh_l r")
 				return False
 			if sh_p < -2.0 or sh_p > -0.3:
-				print "Plan pb for sh_p r"
+				print("Plan pb for sh_p r")
 				return False
 			if elb < 0.6 or elb > 2.3:
-				print "Plan pb for elb r"
+				print("Plan pb for elb r")
 				return False
 
-		print "Plan checked!"
+		print("Plan checked!")
 		return True
 
 	# ======================================================================
@@ -399,7 +399,7 @@ class MovoHandOver(MovoGl):
 		self.scene.remove_attached_object(self.move_group.get_end_effector_link(), name=obj_to_grasp)
 		self.scene.remove_attached_object(self.eef_link, name=obj_to_grasp)
 		rospy.sleep(2)
-		print "User has taken object"
+		print("User has taken object")
 		self.scene.remove_world_object(obj_to_grasp)
 
 		#MOVING AWAY
@@ -420,19 +420,19 @@ class MovoHandOver(MovoGl):
 		is_ok = False
 		nb_try = 0
 		while is_ok == False and nb_try < 10:
-			print "Move attempt - try number: %s" % nb_try
+			print("Move attempt - try number: %s" % nb_try)
 			plan = group.plan()
 			is_ok = self.check_plan(group,plan,name)
 			nb_try = nb_try + 1
 
 		if is_ok:
-			nb_pts = len(plan.joint_trajectory.points)
-			last_pt = plan.joint_trajectory.points[nb_pts-1]
+			nb_pts = len(plan[1].joint_trajectory.points)
+			last_pt = plan[1].joint_trajectory.points[nb_pts-1]
 			joints = last_pt.positions
 			return joints
 		else:
-			print "[ERROR] No plan found to move to %s." % name
-			print ""
+			print("[ERROR] No plan found to move to %s." % name)
+			print("")
 			sys.exit(1)
 
 	# ========================================================================
@@ -469,20 +469,20 @@ class MovoHandOver(MovoGl):
 
 def main():
 	try:
-		print " ============================================================================= "
-		print " ============================ PICK AND PLACE TEST ============================ "
-		print " ============================================================================= "
+		print(" ============================================================================= ")
+		print(" ============================ PICK AND PLACE TEST ============================ ")
+		print(" ============================================================================= ")
 
-		print " ------------------------------------------ "
-		print " ==> Press 'Enter' to initialize "
-		print " ------------------------------------------ "
-		raw_input()
+		print(" ------------------------------------------ ")
+		print(" ==> Press 'Enter' to initialize ")
+		print(" ------------------------------------------ ")
+		input()
 		HO_test = MovoHandOver()
 
-		print " ------------------------------------------ "
-		print " ==> Press 'Enter' to launch pick and place "
-		print " ------------------------------------------ "
-		raw_input()
+		print(" ------------------------------------------ ")
+		print(" ==> Press 'Enter' to launch pick and place ")
+		print(" ------------------------------------------ ")
+		input()
 		HO_test.pick_and_place_all()
 
 

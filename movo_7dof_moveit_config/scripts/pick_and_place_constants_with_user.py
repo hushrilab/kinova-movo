@@ -67,47 +67,51 @@ OBJ_POS_SCENE = {
 
 
 # ===== ITEMS TO GRASP =====
-OBJ_NAMES_GRASP = ["object1"]#,"object2","object3","object4"]
+OBJ_NAMES_GRASP = ["object1","object2","object3"]#,"object4"]
 OBJ_POS_GRASP = {
 	"object1" : {
 		"type" : "BOX",
-		"x" : 0.65,
+		"x" : 0.7,
 		"y" : -0.55,
 		"z" : 1.0,
 		"roll" : 0.0,
 		"pitch" : 0.0,
 		"yaw" : 0.0,
 		"dim" : (0.055, 0.055, 0.4),
+		"translation" : (0.0, 1.2, 0.0)
 	},
 	"object2" : {
 		"type" : "BOX",
-		"x" : 0.50,
+		"x" : 0.55,
 		"y" : -0.55,
 		"z" : 1.0,
 		"roll" : 0.0,
 		"pitch" : 0.0,
 		"yaw" : 0.0,
 		"dim" : (0.05, 0.05, 0.4),
+		"translation" : (0.0, 1.2, 0.0)
 	},
 	"object3" : {
 		"type" : "BOX",
-		"x" : 0.65,
-		"y" : -0.65,
+		"x" : 0.40,
+		"y" : -0.55,
 		"z" : 1.0,
 		"roll" : 0.0,
 		"pitch" : 0.0,
 		"yaw" : 0.0,
 		"dim" : (0.05, 0.05, 0.4),
+		"translation" : (0.0, 1.2, 0.0)
 	},
 	"object4" : {
 		"type" : "BOX",
-		"x" : 0.50,
+		"x" : 0.55,
 		"y" : -0.65,
 		"z" : 1.0,
 		"roll" : 0.0,
 		"pitch" : 0.0,
 		"yaw" : 0.0,
 		"dim" : (0.05, 0.05, 0.4),
+		"translation" : (0.0, 1.2, 0.0)
 	}
 }
 
