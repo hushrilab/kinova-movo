@@ -67,7 +67,7 @@ OBJ_POS_SCENE = {
 
 
 # ===== ITEMS TO GRASP =====
-OBJ_NAMES_GRASP = ["object1"]#,"object2","object3","object4"]
+OBJ_NAMES_GRASP = ["object1","object2","object3"]#,"object4"]
 OBJ_POS_GRASP = {
 	"object1" : {
 		"type" : "BOX",
@@ -93,8 +93,8 @@ OBJ_POS_GRASP = {
 	},
 	"object3" : {
 		"type" : "BOX",
-		"x" : 0.7,
-		"y" : -0.65,
+		"x" : 0.40,
+		"y" : -0.55,
 		"z" : 1.0,
 		"roll" : 0.0,
 		"pitch" : 0.0,
