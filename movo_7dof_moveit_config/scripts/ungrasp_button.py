@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
-from Tkinter import *
-import tkFont as font
+from tkinter import *
+import tkinter.font as font
 
 
 class UngraspButton(object):
