@@ -153,12 +153,12 @@ class MovoGl(object):
 	def move_initial_pose(self):
 		self.move_group_gl.set_named_target("home_grasp");
 		plan = self.move_group_gl.plan()
-		if len(plan.joint_trajectory.points) == 0 :
+		if len(plan[1].joint_trajectory.points) == 0 :
 			print("[ERROR] No plan found to move to initial pose.")
 			sys.exit(1)
 		else :
 			print("Executing plan found to reach initial pose...")
-			self.move_group_gl.execute(plan)
+			self.move_group_gl.execute(plan[1])
 			self.move_group_gl.stop()
 			self.move_group_gl.clear_pose_targets()
 			self.open_gripper(0)
@@ -216,12 +216,12 @@ class MovoGl(object):
 
 		move_group.set_joint_value_target(joint_cmd)
 		plan = move_group.plan()
-		if len(plan.joint_trajectory.points) == 0:
+		if len(plan[1].joint_trajectory.points) == 0:
 				print ("[ERROR] No plan found to: %s." % name)
 				sys.exit(1)
 		else:
 			print ("Executing plan found to %s." % name)
-			move_group.execute(plan)
+			move_group.execute(plan[1])
 			move_group.stop()
 			move_group.clear_pose_targets()
 			print ("Position reached.")
@@ -233,13 +233,13 @@ class MovoGl(object):
 	def move_head(self,joint_values):
 		self.move_group_head.set_joint_value_target(joint_values)
 		plan = self.move_group_head.plan()
-		if len(plan.joint_trajectory.points) == 0 :
+		if len(plan[1].joint_trajectory.points) == 0 :
 			print ("[ERROR] No plan found to move head.")
 			print ("")
 			sys.exit(1)
 		else :
 			print ("Executing plan found to move head.")
-			self.move_group_head.execute(plan)
+			self.move_group_head.execute(plan[1])
 			self.move_group_head.stop()
 			self.move_group_head.clear_pose_targets()
 			print ("Position reached.")
