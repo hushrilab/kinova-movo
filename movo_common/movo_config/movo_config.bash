@@ -9,10 +9,6 @@
 #Default Movo network 
 export MOVO_IP_ADDRESS=10.66.171.5
 
-#Movo IPs
-export KINOVA_MOVO1_IP=10.66.171.1
-export KINOVA_MOVO2_IP=10.66.171.2
-
 # The reference frame for all the accessories and sensors
 export MOVO_PARENT_LINK=base_chassis_link
 
