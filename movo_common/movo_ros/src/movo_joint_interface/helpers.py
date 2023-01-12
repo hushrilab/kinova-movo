@@ -55,9 +55,9 @@ def get_ip_address(ifname):
         struct_pack
     )
     skt_inet_ntoa = socket.inet_ntoa(fctnl_ioctl[20:24])
-    if str(skt_inet_ntoa) == "129.97.71.49":
+    if str(skt_inet_ntoa) == "10.66.171.1":
         return os.environ["KINOVA_MOVO1_IP"]
-    if str(skt_inet_ntoa) == "129.97.71.50":
+    if str(skt_inet_ntoa) == "10.66.171.2":
         return os.environ["KINOVA_MOVO2_IP"]
     return False
 
