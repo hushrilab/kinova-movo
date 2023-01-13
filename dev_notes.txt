@@ -51,6 +51,11 @@ Assert estop is not engaged
 On movo1, run <roslaunch movo_bringup movo1.launch>
 On movo1, run <rosrun si_utils head_jtas_test.py>
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
 # Connecting personal PC to movo1 master
 This is temporary and assumes movo1 is the ROS master. It does not care about about movo2
 On movo1:
@@ -62,6 +67,8 @@ Ensure you've run all your source commands (ie. source devel/setup.bash). These 
 export ROS_MASTER_URI=http://129.97.71.49:11311
 export ROS_IP=<your ip address in same subnet as movo1>
 
+>>>>>>> cd0fe270ef89410dacdf3a211602d5aebc0bfc67
+>>>>>>> ba4d8886d6adf5c94105fe2529072ffd2f6c0d82
 # Using the upstart service
 movo_system.launch is launched by default on bootup
 If there is an error launching a launch file from the terminal where a network port is already in use
@@ -69,3 +76,22 @@ then movo_system.launch has already been launched. Use the stop command below to
 sudo systemctl start movo_system.service
 sudo systemctl stop movo_system.service
 logs for the auto-launched service are in ~/.ros/log
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> ba4d8886d6adf5c94105fe2529072ffd2f6c0d82
+=======
+# Connecting personal PC to movo1 master
+This is temporary and assumes movo1 is the ROS master. It does not care about about movo2
+On movo1:
+Ensure this is done on every terminal where ROS is running
+export ROS_MASTER_URI=http://129.97.71.49:11311
+export ROS_IP=129.97.71.49
+On your laptop:
+Ensure you've run all your source commands (ie. source devel/setup.bash). These other files can overwrite the following env var settings.
+export ROS_MASTER_URI=http://129.97.71.49:11311
+export ROS_IP=<your ip address in same subnet as movo1>
+>>>>>>> enable base control through rviz interactive markers (#14)
+
+=======
+>>>>>>> cd0fe270ef89410dacdf3a211602d5aebc0bfc67
