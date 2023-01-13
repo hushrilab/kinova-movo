@@ -89,6 +89,8 @@ class MovoPickPlace(MovoGl):
 			head_joint_cmd = [0.55,-0.25]
 		else:
 			head_joint_cmd = [0.8,-0.25]
+			
+		print("===> Starting Picking sequence sequence")
 
 		move_group = self.move_groups[id_group]
 		eef_link = self.eef_links[id_group]
@@ -574,10 +576,12 @@ class MovoPickPlace(MovoGl):
 
 		self.load_scene()
 		rospy.sleep(1)
+		
+		print("===> Starting Pick and Place sequence")
 
 		# Create one thread for data collecter
-		t2 = threading.Thread(name="movo_data", target=self.movo_data_collecter.activate_thread, args=())
-		t2.start()
+		# t2 = threading.Thread(name="movo_data", target=self.movo_data_collecter.activate_thread, args=())
+		# t2.start()
 
 		for obj_to_grasp in self.obj_to_grasp:
 			last_pose = self.pick(obj_to_grasp, 0)
@@ -587,7 +591,7 @@ class MovoPickPlace(MovoGl):
 
 		self.move_initial_pose()
 
-		self.movo_data_collecter.clean_shutdown()
+		# self.movo_data_collecter.clean_shutdown()
 		self.pub_ee_state.clean_shutdown()
 
 	# ========================================================================
