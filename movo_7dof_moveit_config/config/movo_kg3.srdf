@@ -10,6 +10,7 @@
     <!--CHAINS: When a chain is specified, all the links along the chain (including endpoints) are included in the group. Additionally, all the joints that are parents to included links are also included. This means that joints along the chain and the parent joint of the base link are included in the group-->
     <!--SUBGROUPS: Groups can also be formed by referencing to already defined group names-->
     <group name="left_arm">
+<<<<<<< HEAD
         <joint name="left_arm_half_joint" />
         <joint name="left_elbow_joint" />
         <joint name="left_shoulder_lift_joint" />
@@ -27,6 +28,11 @@
         <joint name="right_wrist_3_joint" />
         <joint name="right_wrist_spherical_1_joint" />
         <joint name="right_wrist_spherical_2_joint" />
+=======
+        <chain base_link="left_base_link" tip_link="left_ee_link" />
+    </group>
+    <group name="right_arm">
+>>>>>>> e7dc813... Mapped grippers open/close to correct values for fully open/closed in rviz
         <chain base_link="right_base_link" tip_link="right_ee_link" />
     </group>
     <group name="torso">
@@ -70,10 +76,13 @@
         <group name="right_arm" />
         <group name="head" />
     </group>
+<<<<<<< HEAD
     <group name="both_arms">
         <group name="right_arm" />
         <group name="left_arm" />
     </group>
+=======
+>>>>>>> e7dc813... Mapped grippers open/close to correct values for fully open/closed in rviz
     <!--GROUP STATES: Purpose: Define a named state for a particular group, in terms of joint values. This is useful to define states like 'folded arms'-->
     <group_state name="tuck_torso" group="torso">
         <joint name="linear_joint" value="0.04" />
@@ -134,6 +143,7 @@
         <joint name="right_wrist_spherical_2_joint" value="-1.2354" />
         <joint name="tilt_joint" value="0" />
     </group_state>
+<<<<<<< HEAD
     <group_state name="homed_tucked" group="upper_body">
         <joint name="left_arm_half_joint" value="-0.4" />
         <joint name="left_elbow_joint" value="2.7" />
@@ -153,6 +163,8 @@
         <joint name="right_wrist_spherical_2_joint" value="0.5" />
         <joint name="tilt_joint" value="0" />
     </group_state>
+=======
+>>>>>>> e7dc813... Mapped grippers open/close to correct values for fully open/closed in rviz
     <group_state name="plan_grasp" group="upper_body">
         <joint name="left_arm_half_joint" value="-0.021" />
         <joint name="left_elbow_joint" value="-2" />
@@ -172,6 +184,7 @@
         <joint name="right_wrist_spherical_2_joint" value="0" />
         <joint name="tilt_joint" value="0" />
     </group_state>
+<<<<<<< HEAD
     <group_state name="home_grasp" group="upper_body">
         <joint name="left_arm_half_joint" value="2.87" />
         <joint name="left_elbow_joint" value="-2.08" />
@@ -209,6 +222,8 @@
         <joint name="left_wrist_spherical_1_joint" value="2.56" />
         <joint name="left_wrist_spherical_2_joint" value="0.50" />
     </group_state>
+=======
+>>>>>>> e7dc813... Mapped grippers open/close to correct values for fully open/closed in rviz
     <group_state name="larm_constrained_stow" group="left_arm">
         <joint name="left_arm_half_joint" value="-0.021" />
         <joint name="left_elbow_joint" value="-2" />
