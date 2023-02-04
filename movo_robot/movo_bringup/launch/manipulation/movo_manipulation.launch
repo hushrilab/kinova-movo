@@ -30,8 +30,9 @@
             <param name="jaco_dof" value="7dof" if="$(optenv MOVO_HAS_KINOVA_ARM_7DOF false)"/>
         </node>
 
-        <!-- Launches all action servers related to arm movement
-        <include file="$(find movo_bringup)/launch/manipulation/moveit_action_servers.launch"/> -->
+        <!-- Launches all action servers related to arm movement -->
+        <!-- TODO uncomment when launch can be timed after movo_ros:init_robot is launched -->
+        <!-- <include file="$(find movo_bringup)/launch/manipulation/moveit_action_servers.launch"/> -->
 
         <!-- Gripper node, enumeration should be performed with the robotiq tool using id=0 for right gripper and id=1 for left gripper,
              if there is only one gripper it will default to id=0 or right gripper-->

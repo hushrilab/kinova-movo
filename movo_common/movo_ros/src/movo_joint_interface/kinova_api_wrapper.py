@@ -210,7 +210,7 @@ class KinovaAPI(object):
         eth_cfg.localCmdport = localCmdport
         eth_cfg.localBcastPort = localBcastPort
         eth_cfg.robotPort = robotPort
-        eth_cfg.rxTimeOutInMs = 1000
+        eth_cfg.rxTimeOutInMs = 10
         
         result1 = self.InitAPI(byref(eth_cfg))
         self.RefresDevicesList()
