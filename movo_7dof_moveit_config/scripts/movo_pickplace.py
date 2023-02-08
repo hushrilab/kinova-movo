@@ -41,6 +41,10 @@ class MovoPickPlace(MovoGl):
 		self.touch_links_groups = []
 		self.eef_links = []
 
+		print(">>>>>> Planning attempts")
+		print(const.PLANNING_ATTEMPTS)
+		print(">>>>>> Planning time")
+		print(const.PLANNING_TIME)
 		for i in range(const.NB_GROUPS):
 
 			group_name = const.GROUP_NAME[i]
@@ -211,7 +215,7 @@ class MovoPickPlace(MovoGl):
 		group.set_pose_target(pose)
 		is_ok = False
 		nb_try = 0
-		while is_ok == False and nb_try < 20:
+		while is_ok == False and nb_try < const.PLANNING_ATTEMPTS:
 			print ("Move attempt - try number: %s" % nb_try)
 			plan = group.plan()
 			is_ok = self.check_plan(id_group,group,plan,name)
@@ -237,7 +241,7 @@ class MovoPickPlace(MovoGl):
 		group.set_pose_target(pose)
 		is_ok = False
 		nb_try = 0
-		while is_ok == False and nb_try < 20:
+		while is_ok == False and nb_try < const.PLANNING_ATTEMPTS:
 			print ("Move attempt - try number: %s" % nb_try)
 			plan = group.plan()
 			is_ok = self.check_plan(id_group,group,plan,name)
@@ -322,7 +326,7 @@ class MovoPickPlace(MovoGl):
 
 		is_ok = False
 		nb_try = 0
-		while is_ok == False and nb_try < 20:
+		while is_ok == False and nb_try < const.PLANNING_ATTEMPTS:
 			print ("Move attempt - try number: %s" % nb_try)
 			plan_right = self.move_groups[0].plan()
 			is_ok = self.check_plan(0,self.move_groups[0],plan_right,"relax_right")
@@ -454,7 +458,7 @@ class MovoPickPlace(MovoGl):
 		group.set_pose_target(pose)
 		is_ok = False
 		nb_try = 0
-		while is_ok == False and nb_try < 10:
+		while is_ok == False and nb_try < const.PLANNING_ATTEMPTS:
 			print ("Move attempt - try number: %s" % nb_try)
 			plan = group.plan()
 			is_ok = self.check_plan(id_group,group,plan,name)
