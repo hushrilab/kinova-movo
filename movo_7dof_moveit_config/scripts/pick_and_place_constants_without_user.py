@@ -26,7 +26,7 @@ OBJ_POS_SCENE = {
 	"shelf1" : {
 		"type" : "BOX",
 		"x" : 0.5,
-		"y" : -0.8,
+		"y" : -0.9,
 		"z" : 0.4,
 		"roll" : 0.0,
 		"pitch" : 0.0,
@@ -36,7 +36,7 @@ OBJ_POS_SCENE = {
 	"shelf2" : {
 		"type" : "BOX",
 		"x" : 0.5,
-		"y" : 0.8,
+		"y" : 0.9,
 		"z" : 0.4,
 		"roll" : 0.0,
 		"pitch" : 0.0,
@@ -46,7 +46,7 @@ OBJ_POS_SCENE = {
 	"shelf3" : {
 		"type" : "BOX",
 		"x" : 1.85,
-		"y" : -0.8,
+		"y" : -0.9,
 		"z" : 0.4,
 		"roll" : 0.0,
 		"pitch" : 0.0,
@@ -56,7 +56,7 @@ OBJ_POS_SCENE = {
 	"shelf4" : {
 		"type" : "BOX",
 		"x" : 1.85,
-		"y" : 0.8,
+		"y" : 0.9,
 		"z" : 0.4,
 		"roll" : 0.0,
 		"pitch" : 0.0,
@@ -72,35 +72,35 @@ OBJ_POS_GRASP = {
 	"object1" : {
 		"type" : "BOX",
 		"x" : 0.7,
-		"y" : -0.55,
+		"y" : -0.8,
 		"z" : 1.0,
 		"roll" : 0.0,
 		"pitch" : 0.0,
 		"yaw" : 0.0,
 		"dim" : (0.055, 0.055, 0.4),
-		"translation" : (0.0, 1.2, 0.0)
+		"translation" : (0.0, 1.6, 0.0)
 	},
 	"object2" : {
 		"type" : "BOX",
 		"x" : 0.55,
-		"y" : -0.55,
+		"y" : -0.8,
 		"z" : 1.0,
 		"roll" : 0.0,
 		"pitch" : 0.0,
 		"yaw" : 0.0,
 		"dim" : (0.05, 0.05, 0.4),
-		"translation" : (0.0, 1.2, 0.0)
+		"translation" : (0.0, 1.6, 0.0)
 	},
 	"object3" : {
 		"type" : "BOX",
 		"x" : 0.40,
-		"y" : -0.55,
+		"y" : -0.8,
 		"z" : 1.0,
 		"roll" : 0.0,
 		"pitch" : 0.0,
 		"yaw" : 0.0,
 		"dim" : (0.05, 0.05, 0.4),
-		"translation" : (0.0, 1.2, 0.0)
+		"translation" : (0.0, 1.6, 0.0)
 	},
 	"object4" : {
 		"type" : "BOX",
@@ -111,7 +111,7 @@ OBJ_POS_GRASP = {
 		"pitch" : 0.0,
 		"yaw" : 0.0,
 		"dim" : (0.05, 0.05, 0.4),
-		"translation" : (0.0, 1.2, 0.0)
+		"translation" : (0.0, 1.6, 0.0)
 	}
 }
 
