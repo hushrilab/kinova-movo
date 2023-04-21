@@ -93,7 +93,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
             <child link = "${prefix}shoulder_link" />
             <origin xyz="0 0 0.0625" rpy="${shoulder_pan_joint_rpy}" />
             <axis xyz="0 0 1" />
-            <limit lower="${-M_PI}" upper="${M_PI}" effort="18000.0" velocity="0.691150384"/>
+            <limit lower="-2.0" upper="1.9" effort="18000.0" velocity="0.691150384"/>
+            <!--<limit lower="${-M_PI}" upper="${M_PI}" effort="18000.0" velocity="0.691150384"/>-->
             <dynamics damping="0.01" friction="0.0"/>
         </joint>
 
@@ -132,7 +133,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
             <child link = "${prefix}arm_half_1_link" />
             <origin xyz="0 0 -0.11875" rpy="${shoulder_lift_joint_rpy}" />
             <axis xyz="0 0 1" />
-            <limit lower="-2.238" upper="2.238" effort="30000.5" velocity="0.691150384"/>
+            <limit lower="-1.5" upper="0.7" effort="30000.5" velocity="0.691150384"/>
+            <!--<limit lower="-2.238" upper="2.238" effort="30000.5" velocity="0.691150384"/>-->
             <dynamics damping="0.01" friction="0.0"/>
         </joint>
 
@@ -210,7 +212,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
             <child link = "${prefix}forearm_link" />
             <origin xyz="0 0 -0.205" rpy="${elbow_joint_rpy}" />
             <axis xyz="0 0 1" />
-            <limit lower="-2.809" upper="2.809" effort="18000.0" velocity="0.691150384"/>
+            <limit lower="-2.6" upper="2.3" effort="18000.0" velocity="0.691150384"/>
+            <!--<limit lower="-2.809" upper="2.809" effort="18000.0" velocity="0.691150384"/>-->
             <dynamics damping="0.01" friction="0.0"/>
         </joint>
 

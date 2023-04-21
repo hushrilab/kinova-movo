@@ -161,7 +161,7 @@
         <joint name="left_wrist_3_joint" value="-1" />
         <joint name="left_wrist_spherical_1_joint" value="0" />
         <joint name="left_wrist_spherical_2_joint" value="0" />
-        <joint name="linear_joint" value="0.42" />
+        <joint name="linear_joint" value="0.46" />
 <!--        <joint name="pan_joint" value="0.0" />
         <joint name="tilt_joint" value="0.0" />-->
         <joint name="right_arm_half_joint" value="0" />
@@ -180,7 +180,7 @@
         <joint name="left_wrist_3_joint" value="0.95" />
         <joint name="left_wrist_spherical_1_joint" value="2.56" />
         <joint name="left_wrist_spherical_2_joint" value="0.50" />
-        <joint name="linear_joint" value="0.42" />
+        <joint name="linear_joint" value="0.46" />
 <!--        <joint name="pan_joint" value="0.0" />
         <joint name="tilt_joint" value="0.0" />-->
         <joint name="right_arm_half_joint" value="-2.87" />

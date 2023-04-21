@@ -27,41 +27,41 @@ OBJ_POS_SCENE = {
 		"type" : "BOX",
 		"x" : 0.65,
 		"y" : -0.9,
-		"z" : 0.37,
+		"z" : 0.435,
 		"roll" : 0.0,
 		"pitch" : 0.0,
 		"yaw" : 0.0,
-		"dim" : (1.21, 0.6, 0.74)
+		"dim" : (1.21, 0.6, 0.87)
 	},
 	"shelf2" : {
 		"type" : "BOX",
 		"x" : 0.65,
 		"y" : 0.9,
-		"z" : 0.37,
+		"z" : 0.435,
 		"roll" : 0.0,
 		"pitch" : 0.0,
 		"yaw" : 0.0,
-		"dim" : (1.21, 0.6, 0.74)
+		"dim" : (1.21, 0.6, 0.87)
 	},
 	"shelf3" : {
 		"type" : "BOX",
 		"x" : 1.85,
 		"y" : -0.9,
-		"z" : 0.37,
+		"z" : 0.435,
 		"roll" : 0.0,
 		"pitch" : 0.0,
 		"yaw" : 0.0,
-		"dim" : (0.65, 0.6, 0.74)
+		"dim" : (0.65, 0.6, 0.87)
 	},
 	"shelf4" : {
 		"type" : "BOX",
 		"x" : 1.85,
 		"y" : 0.9,
-		"z" : 0.4,
+		"z" : 0.435,
 		"roll" : 0.0,
 		"pitch" : 0.0,
 		"yaw" : 0.0,
-		"dim" : (0.65, 0.6, 0.74)
+		"dim" : (0.65, 0.6, 0.87)
 	}
 }
 
@@ -71,9 +71,9 @@ OBJ_NAMES_GRASP = ["object1","object2","object3"]#,"object4"]
 OBJ_POS_GRASP = {
 	"object1" : {
 		"type" : "BOX",
-		"x" : 0.6,
+		"x" : 0.65,
 		"y" : -0.7,
-		"z" : 0.9,
+		"z" : 1.07,
 		"roll" : 0.0,
 		"pitch" : 0.0,
 		"yaw" : 0.0,
@@ -82,9 +82,9 @@ OBJ_POS_GRASP = {
 	},
 	"object2" : {
 		"type" : "BOX",
-		"x" : 0.35,
+		"x" : 0.45,
 		"y" : -0.7,
-		"z" : 0.9,
+		"z" : 1.07,
 		"roll" : 0.0,
 		"pitch" : 0.0,
 		"yaw" : 0.0,
@@ -93,9 +93,9 @@ OBJ_POS_GRASP = {
 	},
 	"object3" : {
 		"type" : "BOX",
-		"x" : 0.10,
+		"x" : 0.25,
 		"y" : -0.7,
-		"z" : 0.9,
+		"z" : 1.07,
 		"roll" : 0.0,
 		"pitch" : 0.0,
 		"yaw" : 0.0,
@@ -118,7 +118,7 @@ OBJ_POS_GRASP = {
 # APPROACH DISTANCES - PICKING // INITIAL OBJECT POSE
 APPROACH_PICK_X = [0.0, 0.0]
 APPROACH_PICK_Y = [0.0, 0.1]
-APPROACH_PICK_Z = [0.0, 0.0]
+APPROACH_PICK_Z = [0.08, 0.2]
 
 # RETREAT DISTANCES - PRE PLACING // INITIAL OBJECT POSE
 RETREAT_X = [0.0, 0.0]
