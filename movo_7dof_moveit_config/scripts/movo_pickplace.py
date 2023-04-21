@@ -582,24 +582,25 @@ class MovoPickPlace(MovoGl):
 			#			return False
 			
 			if id_group == 0: #right arm
-				if sh_l < -1.2 or sh_l > 0.7:
+				if sh_l < -1.7 or sh_l > 0.7:
 					print ("Plan pb for sh_l r")
 					return False
-				if sh_p < -2.0 or sh_p > -0.9:
+				if sh_p < -2.0 or sh_p > 0.13:
 					print ("Plan pb for sh_p r")
 					return False
-				if elb <0.8 or elb > 2.3:
+				if elb < 1.2 or elb > 2.3:
 					print ("Plan pb for elb r")
 					return False
 			elif id_group == 1: #left arm
 				if sh_l < -1.6 or sh_l > 1.2:
 					print ("Plan pb for sh_l l")
 					return False
-				if sh_p < 0.2 or sh_p > 1.9:
+				if sh_p < 0.2 or sh_p > 1.7:
 					print ("Plan pb for sh_p l")
 					return False
 				if elb < -2.6 or elb > -1.3:
 					print ("Plan pb for elb l")
+					return False
 
 		print ("Plan checked!")
 		return True
