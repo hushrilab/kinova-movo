@@ -5,7 +5,7 @@ planner_configs:
     hybridize: true  # Compute hybrid solution trajectories
     max_hybrid_paths: 24  # Number of hybrid paths generated per iteration
     num_planners: 4  # The number of default planners to use for planning
-    planners: ""  # A comma-separated list of planner types (e.g., "PRM,EST,RRTConnect"Optionally, planner parameters can be passed to change the default:"PRM[max_nearest_neighbors=5],EST[goal_bias=.5],RRT[range=10. goal_bias=.1]"
+    planners: "RRTStar,RRTConnect,PRMStar,LBTRRT"  # A comma-separated list of planner types (e.g., "PRM,EST,RRTConnect"Optionally, planner parameters can be passed to change the default:"PRM[max_nearest_neighbors=5],EST[goal_bias=.5],RRT[range=10. goal_bias=.1]"
   SBL:
     type: geometric::SBL
     range: 0.0  # Max motion added to tree. ==> maxDistance_ default: 0.0, if 0.0, set on setup()
@@ -38,11 +38,13 @@ planner_configs:
   RRTConnect:
     type: geometric::RRTConnect
     range: 0.0  # Max motion added to tree. ==> maxDistance_ default: 0.0, if 0.0, set on setup()
+    optimization_objective: MechanicalWorkOptimizationObjective
   RRTstar:
     type: geometric::RRTstar
     range: 0.0  # Max motion added to tree. ==> maxDistance_ default: 0.0, if 0.0, set on setup()
     goal_bias: 0.05  # When close to goal select goal, with this probability? default: 0.05
     delay_collision_checking: 1  # Stop collision checking as soon as C-free parent found. default 1
+    optimization_objective: MechanicalWorkOptimizationObjective
   TRRT:
     type: geometric::TRRT
     range: 0.0  # Max motion added to tree. ==> maxDistance_ default: 0.0, if 0.0, set on setup()
@@ -54,11 +56,13 @@ planner_configs:
     frountier_threshold: 0.0  # dist new state to nearest neighbor to disqualify as frontier. default: 0.0 set in setup()
     frountierNodeRatio: 0.1  # 1/10, or 1 nonfrontier for every 10 frontier. default: 0.1
     k_constant: 0.0  # value used to normalize expresssion. default: 0.0 set in setup()
+    optimization_objective: MechanicalWorkOptimizationObjective
   PRM:
     type: geometric::PRM
     max_nearest_neighbors: 10  # use k nearest neighbors. default: 10
   PRMstar:
     type: geometric::PRMstar
+    optimization_objective: MechanicalWorkOptimizationObjective
   FMT:
     type: geometric::FMT
     num_samples: 1000  # number of states that the planner should sample. default: 1000
@@ -103,6 +107,7 @@ planner_configs:
     range: 0.0  # Max motion added to tree. ==> maxDistance_ default: 0.0, if 0.0, set on setup()
     goal_bias: 0.05  # When close to goal select goal, with this probability. default: 0.05
     epsilon: 0.4  # optimality approximation factor. default: 0.4
+    optimization_objective: MechanicalWorkOptimizationObjective
   BiEST:
     type: geometric::BiEST
     range: 0.0  # Max motion added to tree. ==> maxDistance_ default: 0.0, if 0.0, set on setup()
@@ -130,59 +135,33 @@ planner_configs:
 right_arm:
   planner_configs:
       - AnytimePathShortening
-      - SBL
-      - EST
-      - LBKPIECE
-      - BKPIECE
-      - KPIECE
-      - RRT
-      - RRTConnect
-      - RRTstar
-      - TRRT
-      - PRM
-      - PRMstar
-      - FMT
-      - BFMT
-      - PDST
-      - STRIDE
-      - BiTRRT
-      - LBTRRT
-      - BiEST
-      - ProjEST
-      - LazyPRM
-      - LazyPRMstar
-      - SPARS
-      - SPARStwo
   projection_evaluator: joints(right_shoulder_pan_joint,right_shoulder_lift_joint)
-  longest_valid_segment_fraction: 0.001
+  longest_valid_segment_fraction: 0.005
+  #enforce_joint_model_state_space: true
 left_arm:
   planner_configs:
       - AnytimePathShortening
-      - SBL
-      - EST
-      - LBKPIECE
-      - BKPIECE
-      - KPIECE
-      - RRT
-      - RRTConnect
-      - RRTstar
-      - TRRT
-      - PRM
-      - PRMstar
-      - FMT
-      - BFMT
-      - PDST
-      - STRIDE
-      - BiTRRT
-      - LBTRRT
-      - BiEST
-      - ProjEST
-      - LazyPRM
-      - LazyPRMstar
-      - SPARS
-      - SPARStwo
   projection_evaluator: joints(left_shoulder_pan_joint,left_shoulder_lift_joint)
-  longest_valid_segment_fraction: 0.001
+  longest_valid_segment_fraction: 0.005
+  #enforce_joint_model_state_space: true
+right_side:
+  planner_configs:
+      - AnytimePathShortening
+  projection_evaluator: joints(linear_joint,right_shoulder_pan_joint)
+  longest_valid_segment_fraction: 0.005
+  #enforce_joint_model_state_space: true
+left_side:
+  planner_configs:
+      - AnytimePathShortening
+  projection_evaluator: joints(linear_joint,left_shoulder_pan_joint)
+  longest_valid_segment_fraction: 0.005
+  #enforce_joint_model_state_space: true
+upper_body:
+  planner_configs:
+      - AnytimePathShortening
+  projection_evaluator: joints(right_shoulder_pan_joint,left_shoulder_pan_joint)
+  longest_valid_segment_fraction: 0.005
+  #enforce_joint_model_state_space: true
 torso:
   planner_configs:
       - AnytimePathShortening
@@ -235,87 +214,3 @@ head:
       - LazyPRMstar
       - SPARS
       - SPARStwo
-right_side:
-  planner_configs:
-      - AnytimePathShortening
-      - SBL
-      - EST
-      - LBKPIECE
-      - BKPIECE
-      - KPIECE
-      - RRT
-      - RRTConnect
-      - RRTstar
-      - TRRT
-      - PRM
-      - PRMstar
-      - FMT
-      - BFMT
-      - PDST
-      - STRIDE
-      - BiTRRT
-      - LBTRRT
-      - BiEST
-      - ProjEST
-      - LazyPRM
-      - LazyPRMstar
-      - SPARS
-      - SPARStwo
-  projection_evaluator: joints(linear_joint,right_shoulder_pan_joint)
-  longest_valid_segment_fraction: 0.001
-left_side:
-  planner_configs:
-      - AnytimePathShortening
-      - SBL
-      - EST
-      - LBKPIECE
-      - BKPIECE
-      - KPIECE
-      - RRT
-      - RRTConnect
-      - RRTstar
-      - TRRT
-      - PRM
-      - PRMstar
-      - FMT
-      - BFMT
-      - PDST
-      - STRIDE
-      - BiTRRT
-      - LBTRRT
-      - BiEST
-      - ProjEST
-      - LazyPRM
-      - LazyPRMstar
-      - SPARS
-      - SPARStwo
-  projection_evaluator: joints(linear_joint,left_shoulder_pan_joint)
-  longest_valid_segment_fraction: 0.001
-upper_body:
-  planner_configs:
-      - AnytimePathShortening
-      - SBL
-      - EST
-      - LBKPIECE
-      - BKPIECE
-      - KPIECE
-      - RRT
-      - RRTConnect
-      - RRTstar
-      - TRRT
-      - PRM
-      - PRMstar
-      - FMT
-      - BFMT
-      - PDST
-      - STRIDE
-      - BiTRRT
-      - LBTRRT
-      - BiEST
-      - ProjEST
-      - LazyPRM
-      - LazyPRMstar
-      - SPARS
-      - SPARStwo
-  projection_evaluator: joints(right_shoulder_pan_joint,left_shoulder_pan_joint)
-  longest_valid_segment_fraction: 0.001

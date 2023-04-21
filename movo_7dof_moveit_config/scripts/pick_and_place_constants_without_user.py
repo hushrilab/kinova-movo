@@ -82,7 +82,7 @@ OBJ_POS_GRASP = {
 	},
 	"object2" : {
 		"type" : "BOX",
-		"x" : 0.45,
+		"x" : 0.50,
 		"y" : -0.7,
 		"z" : 1.07,
 		"roll" : 0.0,
@@ -93,7 +93,7 @@ OBJ_POS_GRASP = {
 	},
 	"object3" : {
 		"type" : "BOX",
-		"x" : 0.25,
+		"x" : 0.35,
 		"y" : -0.7,
 		"z" : 1.07,
 		"roll" : 0.0,
@@ -118,7 +118,7 @@ OBJ_POS_GRASP = {
 # APPROACH DISTANCES - PICKING // INITIAL OBJECT POSE
 APPROACH_PICK_X = [0.0, 0.0]
 APPROACH_PICK_Y = [0.0, 0.1]
-APPROACH_PICK_Z = [0.08, 0.2]
+APPROACH_PICK_Z = [0.08, 0.15]
 
 # RETREAT DISTANCES - PRE PLACING // INITIAL OBJECT POSE
 RETREAT_X = [0.0, 0.0]
