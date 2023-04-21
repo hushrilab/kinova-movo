@@ -100,6 +100,8 @@ class MovoPickPlace(MovoGl):
 		eef_link = self.eef_links[id_group]
 		touch_links = self.touch_links_groups[id_group]
 		self.pose_obj = self.scene.get_object_poses([obj_to_grasp]).get(obj_to_grasp)
+		print(">>> EEF link")
+		print(eef_link)
 
 		# DETERMINE GRIPPER ORIENTATION
 		quat_obj = self.pose_obj.orientation #odom
@@ -112,6 +114,8 @@ class MovoPickPlace(MovoGl):
 		# Get object pose in base link frame + wrist orientation
 		obj_pose_base = PoseStamped()
 		obj_pose_base.header.frame_id = move_group.get_planning_frame()
+		print(">>>> Planning frame")
+		print(obj_pose_base.header.frame_id)
 		obj_pose_base.pose.position.x = self.pose_obj.position.x
 		obj_pose_base.pose.position.y = self.pose_obj.position.y
 		obj_pose_base.pose.position.z = self.pose_obj.position.z
@@ -126,16 +130,24 @@ class MovoPickPlace(MovoGl):
 		obj_pose_wrist = np.dot(obj_pose_wrist,rot_obj)
 		#add in approach in wrist frame
 		dim_y = self.get_dim_obj(obj_to_grasp,1)
+		print(">>>>>> Wrist pose")
+		print(obj_pose_wrist)
 		obj_pose_wrist[0] = obj_pose_wrist[0] - self.const.APPROACH_PICK_X[id_group] - self.const.MARGIN_X[id_group]
 		obj_pose_wrist[1] = obj_pose_wrist[1] - self.const.APPROACH_PICK_Y[id_group] - self.const.MARGIN_Y[id_group]
 		obj_pose_wrist[2] = obj_pose_wrist[2] +  self.const.APPROACH_PICK_Z[id_group] + self.const.MARGIN_Z[id_group] + dim_y/2
+		print(">>>>>> Wrist pose")
+		print(obj_pose_wrist)
 		obj_pose_wrist = np.dot(rot_obj,obj_pose_wrist)
+		print(">>>>>> Wrist pose")
+		print(obj_pose_wrist)
 		# change ref frame from wrist to base
 		obj_pose_base_v = np.dot(np.linalg.inv(self.R_base_wrist_r), obj_pose_wrist)
 		# define goal pose in base frame
 		obj_pose_base.pose.position.x = obj_pose_base_v[0]
 		obj_pose_base.pose.position.y = obj_pose_base_v[1]
 		obj_pose_base.pose.position.z = obj_pose_base_v[2]
+		print(">>>>>> Wrist pose in base")
+		print(obj_pose_base)
 
 		arm_joint_cmd = self.get_joints_from_pose(id_group,move_group,obj_pose_base,"grasp_approach_pose")
 		current_joints = self.move_group_gl.get_current_joint_values()
@@ -144,7 +156,7 @@ class MovoPickPlace(MovoGl):
 		joint_cmd[8:10] = [0.0, 0.0]#head_joint_cmd
 
 		print(" Grasp approach pose")
-		# input()
+		input()
 
 		self.execute_joints_cmd(self.move_group_gl,joint_cmd,"grasp_approach_head_turn")
 
@@ -169,11 +181,11 @@ class MovoPickPlace(MovoGl):
 		grasp_pose_base.pose.position.z = grasp_pose_base_v[2]
 
 		print(" Grasp pose")
-		# input()
+		input()
 		success = self.move_attempt(id_group,move_group, grasp_pose_base, "grasp_pose")
 
 		print(" Close gripper")
-		# input()
+		input()
 		# CLOSE GRIPPER
 		self.close_gripper(id_group)
 
@@ -198,9 +210,8 @@ class MovoPickPlace(MovoGl):
 		pick_retreat_pose_base.pose.position.z = pick_retreat_pose_base_v[2]
 
 		print ("Retreat pose")
-		# input()
+		input()
 		success = self.move_attempt(id_group,move_group, pick_retreat_pose_base, "pick_retreat_pose")
-
 
 		print ("Pick pipeline done.")
 		print ("")
@@ -299,16 +310,16 @@ class MovoPickPlace(MovoGl):
 		plan_both_arms_head = self.combine_plans(plan_both_arms,plan_head)
 
 		print ("Switch point action")
-		# input()
+		input()
 		self.execute_plan_cmd(self.move_group_gl,plan_both_arms_head,"right_switch_left_approach_head")
 
 		print ("Left to switch point")
-		# input()
+		input()
 		p.pose.position.y = p.pose.position.y - self.const.APPROACH_PICK_Y[1]
 		success = self.move_attempt(1,self.move_groups[1], p, "switch_point")
 
 		print ("Close left gripper")
-		# input()
+		input()
 		self.close_gripper(1)
 		self.scene.remove_attached_object(self.move_groups[0].get_end_effector_link(), name=obj_to_grasp)
 		self.scene.remove_attached_object(self.eef_links[0], name=obj_to_grasp)
@@ -316,7 +327,7 @@ class MovoPickPlace(MovoGl):
 		rospy.sleep(1)
 		# FIRST GROUP UNGRASPS
 		print ("Open right gripper")
-		# input()
+		input()
 		self.open_gripper(0)
 
 		#MOVING AWAY
@@ -334,9 +345,9 @@ class MovoPickPlace(MovoGl):
 
 		plan_both_arms = self.combine_plans(plan_right,plan_left)
 		print ("Move away left - relax right")
-		# input()
-		self.execute_plan_cmd(self.move_group_gl,plan_both_arms_head,"right_switch_left_approach_head")
-		#self.execute_plan_cmd(self.move_l_group,plan_both_arms,"left_away_right_relax")
+		input()
+		#self.execute_plan_cmd(self.move_group_gl,plan_both_arms_head,"right_switch_left_approach_head")
+		self.execute_plan_cmd(self.move_group_gl,plan_both_arms,"left_away_right_relax")
 
 		return p.pose
 	# ========================================================================
@@ -393,7 +404,7 @@ class MovoPickPlace(MovoGl):
 		plan_arm_head = self.combine_plans(plan_left,plan_head)
 
 		print ("Place approach pose")
-		# input()
+		input()
 		self.execute_plan_cmd(self.move_group_gl,plan_arm_head,"place_approach_head")
 
 		# MOVE TO PLACE POSE
@@ -412,12 +423,12 @@ class MovoPickPlace(MovoGl):
 		place_pose_base.position.y = place_pose_base_v[1]
 		place_pose_base.position.z = place_pose_base_v[2]
 		print ("Place pose")
-		# input()
+		input()
 		success = self.move_attempt(id_group,move_group, place_pose_base, "place_pose")
 
 		# OPEN GRIPPER
 		print ("Open gripper")
-		# input()
+		input()
 		self.open_gripper(id_group)
 
 		# DETACH OBJECT
@@ -445,7 +456,7 @@ class MovoPickPlace(MovoGl):
 		plan_head = self.move_group_head.plan()
 		plan_arm_head = self.combine_plans(plan_left,plan_head)
 		print ("Place retreat pose")
-		# input()
+		input()
 		self.execute_plan_cmd(self.move_group_gl,plan_arm_head,"place_retreat_head")
 
 		print ("Place pipeline done.")
@@ -569,6 +580,26 @@ class MovoPickPlace(MovoGl):
 			#		if elb < -2.6 or elb > -1.3:
 			#			print ("Plan pb for elb l")
 			#			return False
+			
+			if id_group == 0: #right arm
+				if sh_l < -1.2 or sh_l > 0.7:
+					print ("Plan pb for sh_l r")
+					return False
+				if sh_p < -2.0 or sh_p > -0.9:
+					print ("Plan pb for sh_p r")
+					return False
+				if elb <0.8 or elb > 2.3:
+					print ("Plan pb for elb r")
+					return False
+			elif id_group == 1: #left arm
+				if sh_l < -1.6 or sh_l > 1.2:
+					print ("Plan pb for sh_l l")
+					return False
+				if sh_p < 0.2 or sh_p > 1.9:
+					print ("Plan pb for sh_p l")
+					return False
+				if elb < -2.6 or elb > -1.3:
+					print ("Plan pb for elb l")
 
 		print ("Plan checked!")
 		return True

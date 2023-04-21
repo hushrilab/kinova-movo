@@ -25,33 +25,33 @@ OBJ_NAMES_SCENE = ["shelf1","shelf2","shelf3","shelf4"]
 OBJ_POS_SCENE = {
 	"shelf1" : {
 		"type" : "BOX",
-		"x" : 0.5,
+		"x" : 0.65,
 		"y" : -0.9,
-		"z" : 0.4,
+		"z" : 0.37,
 		"roll" : 0.0,
 		"pitch" : 0.0,
 		"yaw" : 0.0,
-		"dim" : (0.65, 0.6, 0.8)
+		"dim" : (1.21, 0.6, 0.74)
 	},
 	"shelf2" : {
 		"type" : "BOX",
-		"x" : 0.5,
+		"x" : 0.65,
 		"y" : 0.9,
-		"z" : 0.4,
+		"z" : 0.37,
 		"roll" : 0.0,
 		"pitch" : 0.0,
 		"yaw" : 0.0,
-		"dim" : (0.65, 0.6, 0.8)
+		"dim" : (1.21, 0.6, 0.74)
 	},
 	"shelf3" : {
 		"type" : "BOX",
 		"x" : 1.85,
 		"y" : -0.9,
-		"z" : 0.4,
+		"z" : 0.37,
 		"roll" : 0.0,
 		"pitch" : 0.0,
 		"yaw" : 0.0,
-		"dim" : (0.65, 0.6, 0.8)
+		"dim" : (0.65, 0.6, 0.74)
 	},
 	"shelf4" : {
 		"type" : "BOX",
@@ -61,7 +61,7 @@ OBJ_POS_SCENE = {
 		"roll" : 0.0,
 		"pitch" : 0.0,
 		"yaw" : 0.0,
-		"dim" : (0.65, 0.6, 0.8)
+		"dim" : (0.65, 0.6, 0.74)
 	}
 }
 
@@ -71,36 +71,36 @@ OBJ_NAMES_GRASP = ["object1","object2","object3"]#,"object4"]
 OBJ_POS_GRASP = {
 	"object1" : {
 		"type" : "BOX",
-		"x" : 0.7,
-		"y" : -0.8,
-		"z" : 1.0,
+		"x" : 0.6,
+		"y" : -0.7,
+		"z" : 0.9,
 		"roll" : 0.0,
 		"pitch" : 0.0,
 		"yaw" : 0.0,
-		"dim" : (0.055, 0.055, 0.4),
-		"translation" : (0.0, 1.6, 0.0)
+		"dim" : (0.05, 0.05, 0.395),
+		"translation" : (0.0, 1.4, 0.0)
 	},
 	"object2" : {
 		"type" : "BOX",
-		"x" : 0.55,
-		"y" : -0.8,
-		"z" : 1.0,
+		"x" : 0.35,
+		"y" : -0.7,
+		"z" : 0.9,
 		"roll" : 0.0,
 		"pitch" : 0.0,
 		"yaw" : 0.0,
-		"dim" : (0.05, 0.05, 0.4),
-		"translation" : (0.0, 1.6, 0.0)
+		"dim" : (0.05, 0.05, 0.395),
+		"translation" : (0.0, 1.4, 0.0)
 	},
 	"object3" : {
 		"type" : "BOX",
-		"x" : 0.40,
-		"y" : -0.8,
-		"z" : 1.0,
+		"x" : 0.10,
+		"y" : -0.7,
+		"z" : 0.9,
 		"roll" : 0.0,
 		"pitch" : 0.0,
 		"yaw" : 0.0,
-		"dim" : (0.05, 0.05, 0.4),
-		"translation" : (0.0, 1.6, 0.0)
+		"dim" : (0.05, 0.05, 0.395),
+		"translation" : (0.0, 1.4, 0.0)
 	},
 	"object4" : {
 		"type" : "BOX",
@@ -118,7 +118,7 @@ OBJ_POS_GRASP = {
 # APPROACH DISTANCES - PICKING // INITIAL OBJECT POSE
 APPROACH_PICK_X = [0.0, 0.0]
 APPROACH_PICK_Y = [0.0, 0.1]
-APPROACH_PICK_Z = [0.08, 0.2]
+APPROACH_PICK_Z = [0.0, 0.0]
 
 # RETREAT DISTANCES - PRE PLACING // INITIAL OBJECT POSE
 RETREAT_X = [0.0, 0.0]
