@@ -98,7 +98,7 @@
     </group_state>
     <group_state name="tucked" group="upper_body">
         <joint name="left_arm_half_joint" value="-0.4" />
-        <joint name="left_elbow_joint" value="2.7" />
+        <joint name="left_elbow_joint" value="2.58" />
         <joint name="left_shoulder_lift_joint" value="1.5" />
         <joint name="left_shoulder_pan_joint" value="1.6" />
         <joint name="left_wrist_3_joint" value="1.7" />
@@ -108,7 +108,7 @@
 <!--        <joint name="pan_joint" value="0.0" />
         <joint name="tilt_joint" value="0.0" />-->
         <joint name="right_arm_half_joint" value="0.4" />
-        <joint name="right_elbow_joint" value="-2.7" />
+        <joint name="right_elbow_joint" value="-2.58" />
         <joint name="right_shoulder_lift_joint" value="-1.5" />
         <joint name="right_shoulder_pan_joint" value="-1.6" />
         <joint name="right_wrist_3_joint" value="-1.7" />
@@ -136,7 +136,7 @@
     </group_state>
     <group_state name="homed_tucked" group="upper_body">
         <joint name="left_arm_half_joint" value="-0.4" />
-        <joint name="left_elbow_joint" value="2.7" />
+        <joint name="left_elbow_joint" value="2.58" />
         <joint name="left_shoulder_lift_joint" value="1.5" />
         <joint name="left_shoulder_pan_joint" value="1.6" />
         <joint name="left_wrist_3_joint" value="1.7" />
@@ -146,7 +146,7 @@
 <!--        <joint name="pan_joint" value="0.0" />
         <joint name="tilt_joint" value="0.0" />-->
         <joint name="right_arm_half_joint" value="0.4" />
-        <joint name="right_elbow_joint" value="-2.7" />
+        <joint name="right_elbow_joint" value="-2.58" />
         <joint name="right_shoulder_lift_joint" value="-1.5" />
         <joint name="right_shoulder_pan_joint" value="-1.6" />
         <joint name="right_wrist_3_joint" value="-1.7" />
