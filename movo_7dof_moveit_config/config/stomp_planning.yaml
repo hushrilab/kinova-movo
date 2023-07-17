@@ -1,0 +1,409 @@
+# Group: Left arm
+stomp/left_arm:
+  group_name: left_arm
+  optimization:
+    num_timesteps: 100
+    num_iterations: 300
+    num_iterations_after_valid: 0
+    num_rollouts: 30
+    max_rollouts: 30
+    initialization_method: 3 #[1 : LINEAR_INTERPOLATION, 2 : CUBIC_POLYNOMIAL, 3 : MININUM_CONTROL_COST]
+    control_cost_weight: 0.0
+  task:
+    noise_generator:
+      - class: stomp_moveit/NormalDistributionSampling
+        stddev: [0.05, 0.8, 1.0, 0.8, 0.4, 0.4, 0.4]
+    cost_functions:
+      - class: stomp_moveit/CollisionCheck
+        collision_penalty: 1.0
+        cost_weight: 1.0
+        kernel_window_percentage: 0.2
+        longest_valid_joint_move: 0.05
+    noisy_filters:
+      - class: stomp_moveit/JointLimits
+        lock_start: False
+        lock_goal: False
+      - class: stomp_moveit/MultiTrajectoryVisualization
+        line_width: 0.02
+        rgb: [255, 255, 0]
+        marker_array_topic: stomp_trajectories
+        marker_namespace: noisy
+    update_filters:
+      - class: stomp_moveit/PolynomialSmoother
+        poly_order: 6
+      - class: stomp_moveit/TrajectoryVisualization
+        line_width: 0.05
+        rgb: [0, 191, 255]
+        error_rgb: [255, 0, 0]
+        publish_intermediate: True
+        marker_topic: stomp_trajectory
+        marker_namespace: optimized
+
+# Group: Right arm
+stomp/right_arm:
+  group_name: right_arm
+  optimization:
+    num_timesteps: 100
+    num_iterations: 300
+    num_iterations_after_valid: 0
+    num_rollouts: 30
+    max_rollouts: 30
+    initialization_method: 3 #[1 : LINEAR_INTERPOLATION, 2 : CUBIC_POLYNOMIAL, 3 : MININUM_CONTROL_COST]
+    control_cost_weight: 0.0
+  task:
+    noise_generator:
+      - class: stomp_moveit/NormalDistributionSampling
+        stddev: [0.05, 0.8, 1.0, 0.8, 0.4, 0.4, 0.4]
+    cost_functions:
+      - class: stomp_moveit/CollisionCheck
+        collision_penalty: 1.0
+        cost_weight: 1.0
+        kernel_window_percentage: 0.2
+        longest_valid_joint_move: 0.05
+    noisy_filters:
+      - class: stomp_moveit/JointLimits
+        lock_start: False
+        lock_goal: False
+      - class: stomp_moveit/MultiTrajectoryVisualization
+        line_width: 0.02
+        rgb: [255, 255, 0]
+        marker_array_topic: stomp_trajectories
+        marker_namespace: noisy
+    update_filters:
+      - class: stomp_moveit/PolynomialSmoother
+        poly_order: 6
+      - class: stomp_moveit/TrajectoryVisualization
+        line_width: 0.05
+        rgb: [0, 191, 255]
+        error_rgb: [255, 0, 0]
+        publish_intermediate: True
+        marker_topic: stomp_trajectory
+        marker_namespace: optimized
+
+# Group: Torso
+stomp/torso:
+  group_name: torso
+  optimization:
+    num_timesteps: 100
+    num_iterations: 300
+    num_iterations_after_valid: 0
+    num_rollouts: 30
+    max_rollouts: 30
+    initialization_method: 3 #[1 : LINEAR_INTERPOLATION, 2 : CUBIC_POLYNOMIAL, 3 : MININUM_CONTROL_COST]
+    control_cost_weight: 0.0
+  task:
+    noise_generator:
+      - class: stomp_moveit/NormalDistributionSampling
+        stddev: [0.05, 0.8, 1.0, 0.8, 0.4, 0.4, 0.4]
+    cost_functions:
+      - class: stomp_moveit/CollisionCheck
+        collision_penalty: 1.0
+        cost_weight: 1.0
+        kernel_window_percentage: 0.2
+        longest_valid_joint_move: 0.05
+    noisy_filters:
+      - class: stomp_moveit/JointLimits
+        lock_start: False
+        lock_goal: False
+      - class: stomp_moveit/MultiTrajectoryVisualization
+        line_width: 0.02
+        rgb: [255, 255, 0]
+        marker_array_topic: stomp_trajectories
+        marker_namespace: noisy
+    update_filters:
+      - class: stomp_moveit/PolynomialSmoother
+        poly_order: 6
+      - class: stomp_moveit/TrajectoryVisualization
+        line_width: 0.05
+        rgb: [0, 191, 255]
+        error_rgb: [255, 0, 0]
+        publish_intermediate: True
+        marker_topic: stomp_trajectory
+        marker_namespace: optimized
+
+# Group: Left Gripper
+stomp/left_gripper:
+  group_name: left_gripper
+  optimization:
+    num_timesteps: 100
+    num_iterations: 300
+    num_iterations_after_valid: 0
+    num_rollouts: 30
+    max_rollouts: 30
+    initialization_method: 3 #[1 : LINEAR_INTERPOLATION, 2 : CUBIC_POLYNOMIAL, 3 : MININUM_CONTROL_COST]
+    control_cost_weight: 0.0
+  task:
+    noise_generator:
+      - class: stomp_moveit/NormalDistributionSampling
+        stddev: [0.05, 0.8, 1.0, 0.8, 0.4, 0.4, 0.4]
+    cost_functions:
+      - class: stomp_moveit/CollisionCheck
+        collision_penalty: 1.0
+        cost_weight: 1.0
+        kernel_window_percentage: 0.2
+        longest_valid_joint_move: 0.05
+    noisy_filters:
+      - class: stomp_moveit/JointLimits
+        lock_start: False
+        lock_goal: False
+      - class: stomp_moveit/MultiTrajectoryVisualization
+        line_width: 0.02
+        rgb: [255, 255, 0]
+        marker_array_topic: stomp_trajectories
+        marker_namespace: noisy
+    update_filters:
+      - class: stomp_moveit/PolynomialSmoother
+        poly_order: 6
+      - class: stomp_moveit/TrajectoryVisualization
+        line_width: 0.05
+        rgb: [0, 191, 255]
+        error_rgb: [255, 0, 0]
+        publish_intermediate: True
+        marker_topic: stomp_trajectory
+        marker_namespace: optimized
+
+# Group: Right Gripper
+stomp/right_gripper:
+  group_name: right_gripper
+  optimization:
+    num_timesteps: 100
+    num_iterations: 300
+    num_iterations_after_valid: 0
+    num_rollouts: 30
+    max_rollouts: 30
+    initialization_method: 3 #[1 : LINEAR_INTERPOLATION, 2 : CUBIC_POLYNOMIAL, 3 : MININUM_CONTROL_COST]
+    control_cost_weight: 0.0
+  task:
+    noise_generator:
+      - class: stomp_moveit/NormalDistributionSampling
+        stddev: [0.05, 0.8, 1.0, 0.8, 0.4, 0.4, 0.4]
+    cost_functions:
+      - class: stomp_moveit/CollisionCheck
+        collision_penalty: 1.0
+        cost_weight: 1.0
+        kernel_window_percentage: 0.2
+        longest_valid_joint_move: 0.05
+    noisy_filters:
+      - class: stomp_moveit/JointLimits
+        lock_start: False
+        lock_goal: False
+      - class: stomp_moveit/MultiTrajectoryVisualization
+        line_width: 0.02
+        rgb: [255, 255, 0]
+        marker_array_topic: stomp_trajectories
+        marker_namespace: noisy
+    update_filters:
+      - class: stomp_moveit/PolynomialSmoother
+        poly_order: 6
+      - class: stomp_moveit/TrajectoryVisualization
+        line_width: 0.05
+        rgb: [0, 191, 255]
+        error_rgb: [255, 0, 0]
+        publish_intermediate: True
+        marker_topic: stomp_trajectory
+        marker_namespace: optimized
+
+# Group: Head
+stomp/head:
+  group_name: head
+  optimization:
+    num_timesteps: 100
+    num_iterations: 300
+    num_iterations_after_valid: 0
+    num_rollouts: 30
+    max_rollouts: 30
+    initialization_method: 3 #[1 : LINEAR_INTERPOLATION, 2 : CUBIC_POLYNOMIAL, 3 : MININUM_CONTROL_COST]
+    control_cost_weight: 0.0
+  task:
+    noise_generator:
+      - class: stomp_moveit/NormalDistributionSampling
+        stddev: [0.05, 0.8, 1.0, 0.8, 0.4, 0.4, 0.4]
+    cost_functions:
+      - class: stomp_moveit/CollisionCheck
+        collision_penalty: 1.0
+        cost_weight: 1.0
+        kernel_window_percentage: 0.2
+        longest_valid_joint_move: 0.05
+    noisy_filters:
+      - class: stomp_moveit/JointLimits
+        lock_start: False
+        lock_goal: False
+      - class: stomp_moveit/MultiTrajectoryVisualization
+        line_width: 0.02
+        rgb: [255, 255, 0]
+        marker_array_topic: stomp_trajectories
+        marker_namespace: noisy
+    update_filters:
+      - class: stomp_moveit/PolynomialSmoother
+        poly_order: 6
+      - class: stomp_moveit/TrajectoryVisualization
+        line_width: 0.05
+        rgb: [0, 191, 255]
+        error_rgb: [255, 0, 0]
+        publish_intermediate: True
+        marker_topic: stomp_trajectory
+        marker_namespace: optimized
+
+# Group: Right Side
+stomp/right_side:
+  group_name: right_side
+  optimization:
+    num_timesteps: 100
+    num_iterations: 300
+    num_iterations_after_valid: 0
+    num_rollouts: 30
+    max_rollouts: 30
+    initialization_method: 1 #[1 : LINEAR_INTERPOLATION, 2 : CUBIC_POLYNOMIAL, 3 : MININUM_CONTROL_COST]
+    control_cost_weight: 0.2
+  task:
+    noise_generator:
+      - class: stomp_moveit/NormalDistributionSampling
+        stddev: [0.05, 0.8, 1.0, 0.8, 0.4, 0.4, 0.4, 0.4]
+    cost_functions:
+      - class: stomp_moveit/CollisionCheck
+        collision_penalty: 1.0
+        cost_weight: 1.0
+        kernel_window_percentage: 0.2
+        longest_valid_joint_move: 0.05
+    noisy_filters:
+      - class: stomp_moveit/JointLimits
+        lock_start: False
+        lock_goal: False
+      - class: stomp_moveit/MultiTrajectoryVisualization
+        line_width: 0.02
+        rgb: [255, 255, 0]
+        marker_array_topic: stomp_trajectories
+        marker_namespace: noisy
+    update_filters:
+      - class: stomp_moveit/PolynomialSmoother
+        poly_order: 6
+      - class: stomp_moveit/TrajectoryVisualization
+        line_width: 0.05
+        rgb: [0, 191, 255]
+        error_rgb: [255, 0, 0]
+        publish_intermediate: True
+        marker_topic: stomp_trajectory
+        marker_namespace: optimized
+
+# Group: Left Side
+stomp/left_side:
+  group_name: left_side
+  optimization:
+    num_timesteps: 100
+    num_iterations: 300
+    num_iterations_after_valid: 0
+    num_rollouts: 30
+    max_rollouts: 30
+    initialization_method: 1 #[1 : LINEAR_INTERPOLATION, 2 : CUBIC_POLYNOMIAL, 3 : MININUM_CONTROL_COST]
+    control_cost_weight: 0.2
+  task:
+    noise_generator:
+      - class: stomp_moveit/NormalDistributionSampling
+        stddev: [0.05, 0.8, 1.0, 0.8, 0.4, 0.4, 0.4, 0.4]
+    cost_functions:
+      - class: stomp_moveit/CollisionCheck
+        collision_penalty: 1.0
+        cost_weight: 1.0
+        kernel_window_percentage: 0.2
+        longest_valid_joint_move: 0.05
+    noisy_filters:
+      - class: stomp_moveit/JointLimits
+        lock_start: False
+        lock_goal: False
+      - class: stomp_moveit/MultiTrajectoryVisualization
+        line_width: 0.02
+        rgb: [255, 255, 0]
+        marker_array_topic: stomp_trajectories
+        marker_namespace: noisy
+    update_filters:
+      - class: stomp_moveit/PolynomialSmoother
+        poly_order: 6
+      - class: stomp_moveit/TrajectoryVisualization
+        line_width: 0.05
+        rgb: [0, 191, 255]
+        error_rgb: [255, 0, 0]
+        publish_intermediate: True
+        marker_topic: stomp_trajectory
+        marker_namespace: optimized
+
+# Group: Upper body
+stomp/upper_body:
+  group_name: upper_body
+  optimization:
+    num_timesteps: 100
+    num_iterations: 300
+    num_iterations_after_valid: 0
+    num_rollouts: 30
+    max_rollouts: 30
+    initialization_method: 1 #[1 : LINEAR_INTERPOLATION, 2 : CUBIC_POLYNOMIAL, 3 : MININUM_CONTROL_COST]
+    control_cost_weight: 0.2
+  task:
+    noise_generator:
+      - class: stomp_moveit/NormalDistributionSampling
+        stddev: [0.05, 0.8, 1.0, 0.8, 0.4, 0.4, 0.4, 0.05, 0.8, 1.0, 0.8, 0.4, 0.4, 0.4, 0.05, 0.8, 1.0]
+    cost_functions:
+      - class: stomp_moveit/CollisionCheck
+        collision_penalty: 1.0
+        cost_weight: 1.0
+        kernel_window_percentage: 0.2
+        longest_valid_joint_move: 0.05
+    noisy_filters:
+      - class: stomp_moveit/JointLimits
+        lock_start: False
+        lock_goal: False
+      - class: stomp_moveit/MultiTrajectoryVisualization
+        line_width: 0.02
+        rgb: [255, 255, 0]
+        marker_array_topic: stomp_trajectories
+        marker_namespace: noisy
+    update_filters:
+      - class: stomp_moveit/PolynomialSmoother
+        poly_order: 6
+      - class: stomp_moveit/TrajectoryVisualization
+        line_width: 0.05
+        rgb: [0, 191, 255]
+        error_rgb: [255, 0, 0]
+        publish_intermediate: True
+        marker_topic: stomp_trajectory
+        marker_namespace: optimized
+
+# Group: Both arms
+stomp/both_arms:
+  group_name: both_arms
+  optimization:
+    num_timesteps: 100
+    num_iterations: 300
+    num_iterations_after_valid: 0
+    num_rollouts: 30
+    max_rollouts: 30
+    initialization_method: 1 #[1 : LINEAR_INTERPOLATION, 2 : CUBIC_POLYNOMIAL, 3 : MININUM_CONTROL_COST]
+    control_cost_weight: 0.2
+  task:
+    noise_generator:
+      - class: stomp_moveit/NormalDistributionSampling
+        stddev: [0.05, 0.8, 1.0, 0.8, 0.4, 0.4, 0.4, 0.05, 0.8, 1.0, 0.8, 0.4, 0.4, 0.4]
+    cost_functions:
+      - class: stomp_moveit/CollisionCheck
+        collision_penalty: 1.0
+        cost_weight: 1.0
+        kernel_window_percentage: 0.2
+        longest_valid_joint_move: 0.05
+    noisy_filters:
+      - class: stomp_moveit/JointLimits
+        lock_start: False
+        lock_goal: False
+      - class: stomp_moveit/MultiTrajectoryVisualization
+        line_width: 0.02
+        rgb: [255, 255, 0]
+        marker_array_topic: stomp_trajectories
+        marker_namespace: noisy
+    update_filters:
+      - class: stomp_moveit/PolynomialSmoother
+        poly_order: 6
+      - class: stomp_moveit/TrajectoryVisualization
+        line_width: 0.05
+        rgb: [0, 191, 255]
+        error_rgb: [255, 0, 0]
+        publish_intermediate: True
+        marker_topic: stomp_trajectory
+        marker_namespace: optimized

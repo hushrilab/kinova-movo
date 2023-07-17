@@ -22,4 +22,33 @@
   <!-- <param name="capabilities" value="" /> -->
 
   <rosparam command="load" file="$(find movo_7dof_moveit_config)/config/stomp_planning.yaml"/>
+  <!-- Load parameters for all groups in movo_kg3.srdf -->
+  <group ns="left_arm">
+    <rosparam command="load" file="$(find movo_7dof_moveit_config)/config/stomp_planning.yaml" />
+    <param name="group_name" value="left_arm" />
+  </group>
+  <group ns="right_arm">
+    <rosparam command="load" file="$(find movo_7dof_moveit_config)/config/stomp_planning.yaml" />
+    <param name="group_name" value="right_arm" />
+  </group>
+  <group ns="torso">
+    <rosparam command="load" file="$(find movo_7dof_moveit_config)/config/stomp_planning.yaml" />
+    <param name="group_name" value="torso" />
+  </group>
+  <group ns="left_gripper">
+    <rosparam command="load" file="$(find movo_7dof_moveit_config)/config/stomp_planning.yaml" />
+    <param name="group_name" value="left_gripper" />
+  </group>
+  <group ns="right_gripper">
+    <rosparam command="load" file="$(find movo_7dof_moveit_config)/config/stomp_planning.yaml" />
+    <param name="group_name" value="right_gripper" />
+  </group>
+  <group ns="head">
+    <rosparam command="load" file="$(find movo_7dof_moveit_config)/config/stomp_planning.yaml" />
+    <param name="group_name" value="head" />
+  </group>
+  <group ns="right_side">
+    <rosparam command="load" file="$(find movo_7dof_moveit_config)/config/stomp_planning.yaml" />
+    <param name="group_name" value="right_side" />
+  </group>
 </launch>

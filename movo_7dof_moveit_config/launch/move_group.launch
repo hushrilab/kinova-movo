@@ -21,9 +21,14 @@
   <arg name="jiggle_fraction" default="0.05" />
   <arg name="publish_monitored_planning_scene" default="true"/>
 
-  <!-- Planning Functionality -->
+  <!-- Planning Functionality
   <include ns="move_group" file="$(find movo_7dof_moveit_config)/launch/planning_pipeline.launch.xml">
     <arg name="pipeline" value="ompl" />
+  </include> -->
+
+  <!-- Planning Functionality -->
+  <include ns="move_group" file="$(find movo_7dof_moveit_config)/launch/planning_pipeline.launch.xml">
+    <arg name="pipeline" value="stomp" />
   </include>
 
   <!-- Trajectory Execution Functionality -->
