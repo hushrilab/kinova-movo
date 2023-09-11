@@ -23,41 +23,33 @@ ROS:
 3. Connect to WIFI/ Cable 
 
 ## Start the robot computer 
-1. Get into the robot computer 
-  a. ssh robohub@movo1 
-  b. Password: - 
+1. Get into the robot computer: ssh robohub@movo1 
 2. cd Documents/fydp/movo_ws/src/kinova-movo 
-3. git status 
-4. git checkout influenceexperiment
-  a. Check consistency with branches 
-5. git stash if new things come up 
-  a. git stash pop in the end 
-6. cd  ../ .. catkin build 
-7. source devel/setup.bash 
-8. roslaunch movo_bringup movo2.launch first 
-   a. while movo2 is launching, launch movo1 in the meanwhile 
-   b. roslaunch movo_bringup movo1.launch 
-9. cd kinova_movo_ws 
-10. source 
-11. export ROS_MASTER_URI=http://movo2:11311/ 
-  a. ifconfig 
-  b. export ROS_IP=129.97.71.96 
-12. roslaunch movo_7 … custom…_robot.launch 
-13. move the arm if there is collision (red) 
-14. rosrun movo_7… movo_piclplace.py 
-15. Always look at the robot if there is potential collision 
-16. htop 
-17. Kill the process: sudo kill -9 #PID
-  a. Fn+f3
+3. `git status` 
+4. `git checkout influenceexperiment`: check consistency with branches 
+5. `git stash` if new things come up, `git stash pop` in the end 
+6. `cd  ../ ..`
+7. `catkin build` 
+8. `source devel/setup.bash` 
+9. `roslaunch movo_bringup movo2.launch` first;
+10. While movo2 is launching, launch movo1 in the meanwhile: `roslaunch movo_bringup movo1.launch` 
+11. `cd kinova_movo_ws` 
+12. `source `
+13. `export ROS_MASTER_URI=http://movo2:11311/`
+14. Check your own IP address with `ifconfig`, then `export ROS_IP=129.97.71.96` (replace with your own IP) 
+15. `roslaunch movo_7 … custom…_robot.launch`
+16. move the arm if there is collision (red) 
+17. `rosrun movo_7… movo_pickplace.py` 
+18. Always look at the robot if there is potential collision 
+19. htop 
+20. Kill the process: sudo kill -9 #PID (search the process with `Fn+F3` or `F3`)
 
 ## Shut down the robot
 1. Bring the robot to initial position 
 2. Kill movo1 first, and then movo2 
-3. Cd src/kinova-movo 
-  a. git status 
-  b. git checkout master 
-4. cd .. /.., catkin build 
-5. sudo shutdown -h now (on both movo1 and movo2)
+3. cd src/kinova-movo, check repository status `git status`, then `git checkout master` 
+4. `cd .. /..`, `catkin build` 
+5. `sudo shutdown -h now` (on both movo1 and movo2)
 
 ## Original MOVO README
 MOVO repository for the Kinova mobile manipulator
