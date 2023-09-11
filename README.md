@@ -48,14 +48,16 @@ ROS:
 15. Always look at the robot if there is potential collision 
 16. htop 
 17. Kill the process: sudo kill -9 #PID
-  a. Fn+f3  
-18. Bring the robot to initial position 
-19. Kill movo1 first, and then movo2 
-20. Cd src/kinova-movo 
+  a. Fn+f3
+
+## Shut down the robot
+1. Bring the robot to initial position 
+2. Kill movo1 first, and then movo2 
+3. Cd src/kinova-movo 
   a. git status 
   b. git checkout master 
-21. cd .. /.., catkin build 
-22. sudo shutdown -h now (on both movo1 and movo2)
+4. cd .. /.., catkin build 
+5. sudo shutdown -h now (on both movo1 and movo2)
 
 ## Original MOVO README
 MOVO repository for the Kinova mobile manipulator
