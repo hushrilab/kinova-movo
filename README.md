@@ -64,6 +64,17 @@ To launch the pickplace experiment sequence, open another terminal (remember to 
 ```
 rosrun movo_7dof_moveit_config movo_pickplace.py
 ```
+
+### Running the experiment in simulation
+For this, you do not need to do any of the steps related to starting the robot.
+
+Open a terminal and launch Gazebo:
+```
+roslaunch movo_gazebo movo.launch
+```
+This will launch the Gazebo simulation, it is normal that it is flushed with errors, just ignore them.
+Then launch as for the real robot.
+
 **Always look at the robot if there is potential collision!!**
 
 The process sometimes needs to be killed because it cannot be killed with CTRL+C. In a terminal:
