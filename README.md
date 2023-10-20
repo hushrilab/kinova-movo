@@ -23,26 +23,27 @@ ROS:
 3. Connect to WIFI/ Cable 
 
 ## Start the robot computer 
-1. Get into the robot computer: ssh robohub@movo1 
-2. cd Documents/fydp/movo_ws/src/kinova-movo 
-3. `git status` 
-4. `git checkout influenceexperiment`: check consistency with branches 
-5. `git stash` if new things come up, `git stash pop` in the end 
-6. `cd  ../ ..`
-7. `catkin build` 
-8. `source devel/setup.bash` 
-9. `roslaunch movo_bringup movo2.launch` first;
-10. While movo2 is launching, launch movo1 in the meanwhile: `roslaunch movo_bringup movo1.launch` 
-11. `cd kinova_movo_ws` 
-12. `source `
-13. `export ROS_MASTER_URI=http://movo2:11311/`
-14. Check your own IP address with `ifconfig`, then `export ROS_IP=129.97.71.96` (replace with your own IP) 
-15. `roslaunch movo_7 … custom…_robot.launch`
-16. move the arm if there is collision (red) 
-17. `rosrun movo_7… movo_pickplace.py` 
-18. Always look at the robot if there is potential collision 
-19. htop 
-20. Kill the process: sudo kill -9 #PID (search the process with `Fn+F3` or `F3`)
+1. Get into the robot computers in two different terminals: `ssh robohub@movo1` for movo1 and `ssh robohub@movo2` for movo2. 
+2. If needed (e.g. you changed the code, or you want to make sure the code is on your desired status), perform the following:
+   a. On both computers, `cd Documents/fydp/movo_ws/src/kinova-movo` to access the  
+   b. `git status` 
+   c. `git checkout your branch`: check consistency with branches (`influenceexperiment` for this branch) 
+   d. `git stash` if new things come up to save temporarily the status and bring the branch back to a clean state, `git stash pop` in the end to resume them.
+   e. `cd  ../ ..`
+   f. `catkin build` 
+   g. `source devel/setup.bash` 
+3. On movo2: `roslaunch movo_bringup movo2.launch` first;
+4. While movo2 is launching, launch movo1 in the meanwhile: `roslaunch movo_bringup movo1.launch` 
+5. `cd kinova_movo_ws` 
+6. `source `
+14. `export ROS_MASTER_URI=http://movo2:11311/`
+15. Check your own IP address with `ifconfig`, then `export ROS_IP=129.97.71.96` (replace with your own IP) 
+16. `roslaunch movo_7 … custom…_robot.launch`
+17. move the arm if there is collision (red) 
+18. `rosrun movo_7… movo_pickplace.py` 
+19. Always look at the robot if there is potential collision 
+20. htop 
+21. Kill the process: sudo kill -9 #PID (search the process with `Fn+F3` or `F3`)
 
 ## Shut down the robot
 1. Bring the robot to initial position 
