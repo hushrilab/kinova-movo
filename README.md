@@ -48,7 +48,8 @@ ROS:
 7. On your local machine, open a terminal and export the ros master ip: `export ROS_MASTER_URI=http://movo2:11311/`
 8. In the same terminal, check your own IP address with `ifconfig`, then export the ros ip `export ROS_IP=129.97.71.96` (replace with your own IP)
 9. Now check that you are connected with `rostopic list`, you should see all the topics of Movo. If not, you need to double check your connection and settings.
-10. NOTE: every time you open a new terminal or source again setup.bash that needs to be connected to the robot, you must perform steps 6 to 8 in the new terminal.
+
+**NOTE**: every time you open a new terminal or source again setup.bash that needs to be connected to the robot, you must perform steps 6 to 8 in the new terminal.
 
 ## Running the experiment
 To launch moveit with RViz:
