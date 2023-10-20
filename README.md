@@ -53,7 +53,7 @@ ROS:
 ## Running the experiment
 To launch moveit with RViz:
 ```
-roslaunch movo_7_dof_moveit_config custom_moveit_rviz_robot.launch
+roslaunch movo_7dof_moveit_config custom_moveit_rviz_robot.launch
 ```
 This will launch the moveit node on your local machine and RViz.
 
@@ -61,7 +61,7 @@ At this point, you should be able to see if there are any collisions with the ar
 
 To launch the pickplace experiment sequence, open another terminal (remember to source and set your ips), then do the following:
 ```
-rosrun movo_7_dof_moveit_config movo_pickplace.py
+rosrun movo_7dof_moveit_config movo_pickplace.py
 ```
 **Always look at the robot if there is potential collision!!**
 
