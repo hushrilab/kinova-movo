@@ -48,15 +48,6 @@ class KinovaDevice(Structure):
               ("DeviceType",c_int),
               ("DeviceID",c_int)]
     
-class EthernetCommConfig(Structure):
-    _fields_=[("localIpAddress",c_ulong),
-              ("subnetMask",c_ulong),
-              ("robotIpAddress",c_ulong),
-              ("localCmdport",c_ushort),
-              ("localBcastPort",c_ushort),
-              ("robotPort",c_ushort),
-              ("rxTimeOutInMs",c_ulong)]
-    
 class AngularInfo(Structure):
     _fields_=[("Actuator1",c_float),
               ("Actuator2",c_float),
@@ -158,61 +149,52 @@ AUTONOMOUS_CONTROL   = 0
 TELEOP_CONTROL       = 1
 
 
-class KinovaAPI(object):
-    def __init__(self, prefix, interface='enp0s25', robotIpAddress="10.66.171.15", subnetMask="255.255.255.0", localCmdport = 24000,localBcastPort = 24024,robotPort = 44000, dof="6dof"):
+class KinovaUSBAPI(object):
+    def __init__(self, prefix, serial_number='', dof="6dof"):
         
         self.init_success = False
         self.api_online = False
         self._prefix = prefix
         self.commErrCnt = 0
         self.arm_dof = dof
-        
+        print(serial_number)
+        print(dof)
         """
         Create the hooks for the API
         """
-        self.kinova=CDLL('Kinova.API.EthCommandLayerUbuntu.so')
-        self.InitAPI = self.kinova.Ethernet_InitEthernetAPI
-        self.InitAPI.arg_types = [POINTER(EthernetCommConfig)]
-        self.CloseAPI = self.kinova.Ethernet_CloseAPI
-        self.RefresDevicesList = self.kinova.Ethernet_RefresDevicesList
-        self.GetDevices = self.kinova.Ethernet_GetDevices
+        self.kinova=CDLL('Kinova.API.USBCommandLayerUbuntu.so')
+        self.InitAPI = self.kinova.InitAPI
+        # self.InitAPI.arg_types = [POINTER(EthernetCommConfig)]
+        self.CloseAPI = self.kinova.CloseAPI
+        self.RefresDevicesList = self.kinova.RefresDevicesList
+        self.GetDevices = self.kinova.GetDevices
         self.GetDevices.argtypes = [POINTER(KinovaDevice),POINTER(c_int)]
-        self.SetActiveDevice = self.kinova.Ethernet_SetActiveDevice
+        self.SetActiveDevice = self.kinova.SetActiveDevice
         self.SetActiveDevice.argtypes = [KinovaDevice]
-        self.GetAngularPosition = self.kinova.Ethernet_GetAngularPosition
+        self.GetAngularPosition = self.kinova.GetAngularPosition
         self.GetAngularPosition.argtypes = [POINTER(AngularPosition)]
-        self.GetAngularVelocity = self.kinova.Ethernet_GetAngularVelocity
+        self.GetAngularVelocity = self.kinova.GetAngularVelocity
         self.GetAngularVelocity.argtypes = [POINTER(AngularPosition)]
-        self.GetAngularForce = self.kinova.Ethernet_GetAngularForce
+        self.GetAngularForce = self.kinova.GetAngularForce
         self.GetAngularForce.argtypes = [POINTER(AngularPosition)]
-        self.GetSensorsInfo = self.kinova.Ethernet_GetSensorsInfo
+        self.GetSensorsInfo = self.kinova.GetSensorsInfo
         self.GetSensorsInfo.argtypes=[POINTER(SensorInfo)]
-        self.GetAngularCurrentMotor = self.kinova.Ethernet_GetAngularCurrentMotor
+        self.GetAngularCurrentMotor = self.kinova.GetAngularCurrentMotor
         self.GetAngularCurrentMotor.argtypes = [POINTER(AngularPosition)]
-        self.StartControlAPI = self.kinova.Ethernet_StartControlAPI
-        self.StopControlAPI = self.kinova.Ethernet_StopControlAPI
-        self.SendAdvanceTrajectory = self.kinova.Ethernet_SendAdvanceTrajectory
+        self.StartControlAPI = self.kinova.StartControlAPI
+        self.StopControlAPI = self.kinova.StopControlAPI
+        self.SendAdvanceTrajectory = self.kinova.SendAdvanceTrajectory
         self.SendAdvanceTrajectory.argtypes = [TrajectoryPoint]
-        self.SendBasicTrajectory = self.kinova.Ethernet_SendBasicTrajectory
+        self.SendBasicTrajectory = self.kinova.SendBasicTrajectory
         self.SendBasicTrajectory.argtypes = [TrajectoryPoint]
-        self.EraseAllTrajectories = self.kinova.Ethernet_EraseAllTrajectories
-        self.SetAngularControl = self.kinova.Ethernet_SetAngularControl
-        self.SetCartesianControl = self.kinova.Ethernet_SetCartesianControl
-        self.MoveHome = self.kinova.Ethernet_MoveHome
-        self.InitFingers = self.kinova.Ethernet_InitFingers
+        self.EraseAllTrajectories = self.kinova.EraseAllTrajectories
+        self.SetAngularControl = self.kinova.SetAngularControl
+        self.SetCartesianControl = self.kinova.SetCartesianControl
+        self.MoveHome = self.kinova.MoveHome
+        self.InitFingers = self.kinova.InitFingers
         self.DevInfoArrayType = ( KinovaDevice * 20 )
         
-        local_ip = get_ip_address(interface)
-        eth_cfg = EthernetCommConfig()
-        eth_cfg.localIpAddress = dottedQuadToNum(local_ip)
-        eth_cfg.subnetMask = dottedQuadToNum(subnetMask)
-        eth_cfg.robotIpAddress = dottedQuadToNum(robotIpAddress)
-        eth_cfg.localCmdport = localCmdport
-        eth_cfg.localBcastPort = localBcastPort
-        eth_cfg.robotPort = robotPort
-        eth_cfg.rxTimeOutInMs = 10
-        
-        result1 = self.InitAPI(byref(eth_cfg))
+        result1 = self.InitAPI()
         self.RefresDevicesList()
         result2 = c_int(0)
         devinfo = self.DevInfoArrayType()
@@ -230,9 +212,30 @@ class KinovaAPI(object):
         """
         Collect the information for the arm since we know there is one
         """
-        self.sn = devinfo[0].SerialNumber
-        self._arm = devinfo[0]
-        rospy.loginfo('%s arm at %s has serial number: %s'%(self._prefix,robotIpAddress,self.sn))
+        dev_num = -1
+        
+        rospy.loginfo("%i arms connected" % len(devinfo))
+        # for i in range(len(devinfo)):
+        #     rospy.loginfo(str(devinfo[i].SerialNumber))
+        
+        for i in range(len(devinfo)):
+            try:
+                if serial_number == '' or serial_number == devinfo[i].SerialNumber.decode('utf-8'):
+                    dev_num = i
+                    break
+            except UnicodeDecodeError:
+                pass
+        
+        if dev_num < 0:
+            rospy.logerr("Initialization failed, could not find Kinova device with serial number: " +
+                serial_number + "\n(see Kinova.API.CommLayerUbuntu.h for details)")
+            self.Shutdown()
+            return
+
+        self.sn = devinfo[dev_num].SerialNumber
+        self._arm = devinfo[dev_num]
+
+        rospy.loginfo('%s arm has serial number: %s'%(self._prefix,self.sn))
 
         """
         Try and set the active device, the API version not matching is usually why this fails
@@ -312,7 +315,7 @@ class KinovaAPI(object):
             traj.Position.Fingers.Finger1 = cmds[7]/FINGER_FACTOR
             traj.Position.Fingers.Finger2 = cmds[8]/FINGER_FACTOR
             traj.Position.Fingers.Finger3 = cmds[9]/FINGER_FACTOR
-            # rospy.logerr("send_angular_vel_cmds_Eth:[%f] [%f] [%f] [%f] [%f] [%f] [%f]" %(cmds[0], cmds[1], cmds[2], cmds[3], cmds[4], cmds[5], cmds[6]))
+            # rospy.logerr("send_angular_vel_cmds_USB:[%f] [%f] [%f] [%f] [%f] [%f] [%f]" %(cmds[0], cmds[1], cmds[2], cmds[3], cmds[4], cmds[5], cmds[6]))
 
         self.SendAdvanceTrajectory(traj)
     
@@ -321,6 +324,7 @@ class KinovaAPI(object):
     
     def get_angular_position(self):
         pos = AngularPosition()
+
         api_stat= self.GetAngularPosition(byref(pos))
         
         if ( NO_ERROR_KINOVA == api_stat):

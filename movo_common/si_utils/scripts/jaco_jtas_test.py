@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
-"""--------------------------------------------------------------------
-Copyright (c) 2017, Kinova Robotics inc.
+"""-----------------------------
+sopyright (c) 2017, Kinova Robotics inc.
 
 All rights reserved.
 
@@ -15,25 +15,26 @@ are permitted provided that the following conditions are met:
     * Neither the name of the copyright holder nor the names of its contributors
       may be used to endorse or promote products derived from this software
       without specific prior written permission.
-      
-THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS 
-"AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT 
-LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR 
-A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR 
-CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, 
-EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, 
-PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR 
-PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF 
-LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING 
-NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS 
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+"AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR
+CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- 
+
  \file   jaco_jtas_test
 
  \brief
 
  \Platform: Linux/ROS Indigo
 --------------------------------------------------------------------"""
+
 import sys
 
 from copy import copy
@@ -53,7 +54,7 @@ from control_msgs.msg import JointTrajectoryControllerState
 
 
 class JacoJTASTest(object):
-    def __init__(self, arm='right', dof='6dof'):
+    def __init__(self, arm, dof='7dof'):
         self._client = actionlib.SimpleActionClient(
             'movo/%s_arm_controller/follow_joint_trajectory'%arm,
             FollowJointTrajectoryAction,
@@ -79,7 +80,7 @@ class JacoJTASTest(object):
         self._goal.trajectory.points.append(point)
 
     def add_point_deg(self, joints_degree, time):
-        self.add_point(list(map(math.radians, joints_degree)), time)
+        self.add_point(map(math.radians, joints_degree), time)
 
     def start(self):
         self._goal.trajectory.header.stamp = rospy.Time(0.0)
@@ -115,26 +116,46 @@ class JacoJTASTest(object):
 
 
 def main():
+
     rospy.init_node('jaco_jtas_test')
-    dof = rospy.get_param('~jaco_dof')
-    
-    tmp = rospy.wait_for_message("/movo/right_arm/joint_states", JointState)
-    current_angles= tmp.position
-    traj = JacoJTASTest('right')
-    traj.add_point(current_angles, 0.0)
+    #dof = rospy.get_param('~jaco_dof')
+
+    dof = '7dof'
+    #tmp = rospy.wait_for_message("/movo/right_arm/joint_states", JointState)
+
+    tmp = rospy.wait_for_message("/joint_states", JointState)
+    current_angles_right= [tmp.position[14], tmp.position[13], tmp.position[10], tmp.position[11], tmp.position[16], tmp.position[17], tmp.position[15]]
+    current_angles_left= [tmp.position[4], tmp.position[3], tmp.position[0], tmp.position[1], tmp.position[6], tmp.position[7], tmp.position[5]]
+
+    traj_left = JacoJTASTest('left')
+
+    traj_right = JacoJTASTest('right')
+
+    traj_left.add_point(current_angles_left, 0.0)
+    traj_right.add_point(current_angles_right, 0.0)
 
     if '6dof' == dof:
         p1 = [0.0] * 6
     if '7dof' == dof:
-        p1 = [0.0] * 7
+        p1_left = [0.785, 0.785, 0.01, 0.01, 0.01, 0.01, 0.01]
+        p1_right =[1.5708, -0.7854, 0.5, -1.5708, 0.5, -0.7854, 0.7854]
+        #p1_right =[1.1129, 2.8356-3.14, 1.7025, 1.7597-3.14, -0.9478, 1.24461-3.14, 0.9935]
 
-    traj.add_point(p1,10.0)
-    p2 = list(current_angles)
-    traj.add_point(p2,20.0)
-    traj.start()
+    traj_left.add_point(p1_left,10.0)
+    traj_right.add_point(p1_right,10.0)
 
-    traj.wait(20.0)
+    #p2 = [-0.36064, 0.968, 0.084719, 1.5726, 0.32265, 0.63793, -2.999]
+    #traj_right.add_point(p2,20.0)
+
+    traj_left.start()
+    traj_right.start()
+
+    traj_left.wait(20.0)
+    traj_right.wait(20.0)
     print("Exiting - Joint Trajectory Action Test Complete")
+
 
 if __name__ == "__main__":
     main()
+
+

@@ -46,6 +46,7 @@ from .kinova_angles import *
 from .helpers import *
 from .jaco_joint_pid import JacoPID
 from .kinova_api_wrapper import *
+from .kinova_usb_api_wrapper import *
 import operator
         
 class SIArmController(object):
@@ -94,9 +95,11 @@ class SIArmController(object):
         Create the hooks for the API
         """
         if ('left' == prefix):
-            self.api = KinovaAPI('left',self.iface,jaco_ip,'255.255.255.0',24000,24024,44000, self.arm_dof)
+            # self.api = KinovaAPI('left',self.iface,jaco_ip,'255.255.255.0',24000,24024,44000, self.arm_dof)
+            self.api = KinovaUSBAPI('left', 'Broken_Robot', self.arm_dof)
         elif ('right' == prefix):
             self.api = KinovaAPI('right',self.iface,jaco_ip,'255.255.255.0',25000,25025,55000, self.arm_dof)
+            # self.api = KinovaUSBAPI('right', 'WO510423-1', self.arm_dof)
         else:
             rospy.logerr("prefix needs to be set to left or right, cannot start the controller")
             return
@@ -140,6 +143,7 @@ class SIArmController(object):
         """
         Register the publishers and subscribers
         """
+        self.last_run_time = rospy.get_time()
         self.last_teleop_cmd_update = rospy.get_time()-0.5
         self._teleop_cmd_sub = rospy.Subscriber("/movo/%s_arm/cartesian_vel_cmd"%self._prefix,JacoCartesianVelocityCmd,self._update_teleop_cmd)
         
@@ -194,7 +198,6 @@ class SIArmController(object):
 
         for i in range(self._num_joints):
             self._pid[i] = JacoPID(5.0,0.0,0.8)
-
         """
         self._pid[0] = JacoPID(5.0,0.0,0.8)
         self._pid[1] = JacoPID(5.0,0.0,0.8)
@@ -233,6 +236,10 @@ class SIArmController(object):
         """ 
         rospy.loginfo("Starting the %s controller"%self._prefix)
         self._done = False
+        timer_rate = rospy.Duration(0.01)
+        if self._prefix == 'left':
+            rospy.Duration(0.009)
+        
         self._t1 = rospy.Timer(rospy.Duration(0.01),self._run_ctl)
         
     def _init_ext_joint_position_control(self):    
@@ -395,17 +402,26 @@ class SIArmController(object):
         pos_error = [pos_error[jnt] for jnt in joint_names]
         return pos_error  
          
-    def _update_controller_data(self):
+    def _update_controller_data(self, full_update=True):
         pos = self.api.get_angular_position()
-        vel = self.api.get_angular_velocity()
-        force = self.api.get_angular_force()
-        sensor_data = self.api.get_sensor_data()
+        vel = []
+        force = []
+        sensor_data = []
 
-        if(len(sensor_data[0]) > 0):
-            self._actfdbk_msg.current = sensor_data[0]
-            
-        if(len(sensor_data[1]) > 0):
-            self._actfdbk_msg.temperature = sensor_data[1]
+        if full_update:
+            vel = self.api.get_angular_velocity()
+            force = self.api.get_angular_force()
+            sensor_data = self.api.get_sensor_data()
+        else:
+            for i in range(min(len(pos),len(self._joint_fb['position']))):
+                vel.append((pos[i]-self._joint_fb['position'][i])/0.01)
+
+        if len(sensor_data) > 0:
+            if(len(sensor_data[0]) > 0):
+                self._actfdbk_msg.current = sensor_data[0]
+                
+            if(len(sensor_data[1]) > 0):
+                self._actfdbk_msg.temperature = sensor_data[1]
 
         self._actfdbk_msg.header.stamp = rospy.get_rostime()
         self._actfdbk_msg.header.seq+=1
@@ -413,7 +429,6 @@ class SIArmController(object):
 
         if(len(pos) > 0):
             self._joint_fb['position'] = pos[:self._num_joints]
-
         if(len(vel) > 0):
             self._joint_fb['velocity'] = vel[:self._num_joints]
 
@@ -470,11 +485,20 @@ class SIArmController(object):
         
         with self._lock:
             
-            """
-            First update the controller data
-            """
-            self._update_controller_data()
+            time = rospy.get_time()
+            # if self._prefix == 'left':
+            #     print(time-self.last_run_time)
+            self.last_run_time = time
+
+            if self._prefix != 'left':
+                """
+                First update the controller data
+                """
+                self._update_controller_data()
             
+            # if self._prefix == 'left':
+            #     print(f"took {rospy.get_time()-self.last_run_time} seconds to update controller data")
+
             if self.estop:
                 return
         
@@ -532,8 +556,17 @@ class SIArmController(object):
                 else:
                     cmds.append(0.0)
 
+            time = rospy.get_time()
             self.api.send_angular_vel_cmds(cmds)
-            
+
+            # Done when on USB to prioritize sending data to keep alive.
+            if self._prefix == 'left':
+                process_time = rospy.get_time()-self.last_run_time
+                # print(f"took {process_time} seconds to send vel commands")
+                if 0.01-process_time > 0.006:
+                    self._update_controller_data(True)
+                elif 0.01-process_time > 0.002:
+                    self._update_controller_data(False)
             """
             Publish the controller state
             """    
@@ -549,5 +582,7 @@ class SIArmController(object):
             self._jstmsg.error.velocities= list(map(operator.sub, self._arm_cmds['velocity'], self._joint_fb['velocity']))
             self._jstmsg.error.accelerations=[0.0]*self._num_joints                
             self._jstpub.publish(self._jstmsg) 
-            self._jstmsg.header.seq +=1                       
+            self._jstmsg.header.seq +=1
+            # if self._prefix == 'left':
+            #     print(f"took {rospy.get_time()-self.last_run_time} seconds to run control loop")
      
